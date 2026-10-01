@@ -89,7 +89,7 @@ LIVORA/
 
 ## ✦ License
 
-**Proprietary — All Rights Reserved** © 2026 Prajwal Nair.
+**Proprietary — All Rights Reserved** © 2026 Prajwal M P.
 
 This code, design and content may **not** be copied, used, modified, deployed or redistributed by anyone
 except authorized collaborators with written permission. Being able to see this repository does not give you
