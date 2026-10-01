@@ -1,21 +1,72 @@
-MIT License
+PROPRIETARY LICENSE — ALL RIGHTS RESERVED
 
-Copyright (c) 2026 Prajwal Nair
+Copyright (c) 2026 Prajwal Nair. All rights reserved.
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
+This repository and everything in it, including but not limited to source
+code, designs, layouts, graphics, animations, text, copy, brand names, logos,
+and documentation (together, the "Software"), is the confidential and
+proprietary property of the copyright holder.
 
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
+1. NO LICENSE GRANTED
 
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.
+   No license or right of any kind is granted to any person or entity by
+   this notice, by the Software being publicly visible, or by any other means,
+   except as expressly set out in Section 2.
+
+2. AUTHORIZED COLLABORATORS ONLY
+
+   Only individuals who have been given explicit, prior written permission by
+   the copyright holder ("Authorized Collaborators") may access, use, or modify
+   the Software, and only for the purpose of working on this project for the
+   copyright holder. This permission:
+
+   a. is personal, non-exclusive, non-transferable, and non-sublicensable;
+   b. may be revoked by the copyright holder at any time, for any reason; and
+   c. ends automatically when the collaborator's involvement in the project
+      ends, at which point all copies must be deleted.
+
+   All contributions made by Authorized Collaborators become part of the
+   Software and are subject to this license.
+
+3. RESTRICTIONS
+
+   Unless you are an Authorized Collaborator acting within Section 2, you may
+   NOT, in whole or in part:
+
+   a. copy, reproduce, download, clone, or mirror the Software;
+   b. use, run, deploy, host, or publish the Software, or any website or
+      application based on it;
+   c. modify, adapt, translate, or create derivative works of the Software;
+   d. distribute, sell, sublicense, rent, lease, lend, or otherwise make the
+      Software available to any third party;
+   e. use the Software, its design, layout, visual style, or content as a
+      template, reference, or starting point for any other project, whether
+      commercial or non-commercial;
+   f. use the Software or any part of it to train, fine-tune, or evaluate any
+      machine-learning or artificial-intelligence model;
+   g. reverse engineer, decompile, or extract any part of the Software; or
+   h. remove, alter, or obscure this notice or any copyright or proprietary
+      notice in the Software.
+
+   Authorized Collaborators are also bound by restrictions (d) through (h).
+
+4. TRADEMARKS
+
+   "LIVORA", its logo, and related names and marks are the property of the
+   copyright holder. Nothing in this notice grants any right to use them.
+
+5. ENFORCEMENT
+
+   Any use of the Software not expressly permitted by this license is an
+   infringement of the copyright holder's rights and may result in civil and
+   criminal liability. The copyright holder reserves the right to pursue all
+   available legal remedies, including injunctive relief and damages.
+
+6. NO WARRANTY
+
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED. IN NO EVENT SHALL THE COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM,
+   DAMAGES, OR OTHER LIABILITY ARISING FROM OR IN CONNECTION WITH THE SOFTWARE.
+
+To request permission, contact the copyright holder through
+https://github.com/Prajwalps2603.

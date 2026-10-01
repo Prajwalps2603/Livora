@@ -6,7 +6,7 @@
   <img src="https://img.shields.io/badge/React-19-0D0D0C?style=for-the-badge&logo=react&logoColor=C8F53B" alt="React 19" />
   <img src="https://img.shields.io/badge/Vite-8-0D0D0C?style=for-the-badge&logo=vite&logoColor=C8F53B" alt="Vite 8" />
   <img src="https://img.shields.io/badge/Framer_Motion-13-0D0D0C?style=for-the-badge&logo=framer&logoColor=C8F53B" alt="Framer Motion" />
-  <img src="https://img.shields.io/badge/License-MIT-C8F53B?style=for-the-badge&labelColor=0D0D0C" alt="MIT License" />
+  <img src="https://img.shields.io/badge/License-Proprietary-C8F53B?style=for-the-badge&labelColor=0D0D0C" alt="Proprietary License" />
 </p>
 
 <p align="center">
@@ -55,11 +55,12 @@ Every section after that follows the same rule: **motion that explains something
 - **Surfaces:** soft shadows and distinct section backgrounds instead of hairline borders
 - **Motion:** Framer Motion reveals, a custom cursor and a skeleton loader on first paint
 
-## ✦ Run it locally
+## ✦ For authorized collaborators
+
+> [!IMPORTANT]
+> This is a private, proprietary project. Only collaborators with written permission from the owner may clone, run or modify it. See [LICENSE](LICENSE).
 
 ```bash
-git clone https://github.com/Prajwalps2603/Livora.git
-cd Livora
 npm install
 npm run dev        # http://localhost:5173
 ```
@@ -88,7 +89,11 @@ LIVORA/
 
 ## ✦ License
 
-Released under the [MIT License](LICENSE) © 2026 Prajwal Nair.
+**Proprietary — All Rights Reserved** © 2026 Prajwal Nair.
+
+This code, design and content may **not** be copied, used, modified, deployed or redistributed by anyone
+except authorized collaborators with written permission. Being able to see this repository does not give you
+any right to use it. Full terms are in [LICENSE](LICENSE).
 
 <p align="center">
   <sub>Built with care, a lot of motion, and one very specific shade of lime.</sub>
