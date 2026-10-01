@@ -1,0 +1,152 @@
+.why-livora {
+  position: relative;
+  overflow: hidden;
+  padding: var(--space-4xl) 0;
+}
+
+.why__title-accent {
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.why__grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-xl);
+}
+
+.why__card {
+  padding: var(--space-2xl) var(--space-xl);
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--glass-border);
+  background: rgba(255, 255, 255, 0.75);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+              box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+              border-color 0.4s ease;
+  z-index: 1;
+}
+
+.why__card:hover {
+  border-color: var(--why-card-glow, rgba(var(--accent-rgb), 0.3));
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.08);
+}
+
+/* Background Gradient */
+.why__card-bg-gradient {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.9;
+  transition: opacity var(--transition-base);
+}
+
+.why__card:hover .why__card-bg-gradient {
+  opacity: 1;
+}
+
+/* Watermark Illustration */
+.why__card-watermark {
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 0;
+  transform: rotate(-10deg);
+  transition: transform 0.5s ease, opacity 0.5s ease;
+}
+
+.why__card:hover .why__card-watermark {
+  opacity: 0.08;
+  transform: rotate(0deg) scale(1.1);
+}
+
+/* Top Row */
+.why__card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: var(--space-lg);
+  position: relative;
+  z-index: 1;
+}
+
+.why__card-icon {
+  width: 56px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 18px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  transition: transform var(--transition-base);
+}
+
+.why__card:hover .why__card-icon {
+  transform: scale(1.08);
+}
+
+.why__card-tag {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+}
+
+.why__card-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+  margin-bottom: var(--space-xs);
+  position: relative;
+  z-index: 1;
+}
+
+.why__card-desc {
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+  position: relative;
+  z-index: 1;
+}
+
+/* Dark Theme Overrides */
+[data-theme="dark"] .why__card {
+  background: rgba(var(--ink-rgb), 0.65);
+  border-color: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .why__card:hover {
+  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .why__card-watermark {
+  opacity: 0.03;
+  color: white;
+}
+
+[data-theme="dark"] .why__card:hover .why__card-watermark {
+  opacity: 0.07;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .why__grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 640px) {
+  .why__grid { grid-template-columns: 1fr; }
+}

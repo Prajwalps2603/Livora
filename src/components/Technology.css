@@ -1,0 +1,171 @@
+.technology {
+  position: relative;
+  overflow: hidden;
+}
+
+/* --- Category filter --- */
+.tech__filters {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+.tech__filter {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--color-border);
+  font-size: 0.86rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  isolation: isolate;
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.tech__filter:hover {
+  color: var(--color-text);
+  border-color: var(--color-text);
+}
+
+.tech__filter small {
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  opacity: 0.7;
+}
+
+.tech__filter.is-active {
+  color: var(--surface-page);
+  border-color: var(--color-text);
+}
+
+.tech__filter-bg {
+  position: absolute;
+  inset: -1px;
+  z-index: -1;
+  border-radius: inherit;
+  background: var(--color-text);
+}
+
+/* --- Grid: five across --- */
+.tech__grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.tech__card {
+  --tech-color: var(--ink);
+  --tech-on: #fff;
+  display: flex;
+  align-items: center;
+  gap: 13px;
+  min-width: 0;
+  padding: 12px 14px 12px 12px;
+  border-radius: 18px;
+  cursor: default;
+}
+
+/* Real brand mark on a white tile; the tile floods with the brand colour on hover */
+.tech__icon-box {
+  position: relative;
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  display: grid;
+  place-items: center;
+  border-radius: 14px;
+  background: #fff;
+  color: var(--tech-color);
+  box-shadow: inset 0 0 0 1px rgba(13, 13, 12, 0.1);
+  overflow: hidden;
+  isolation: isolate;
+  transition: color 0.35s ease, transform 0.6s var(--ease-out-expo);
+}
+
+.tech__icon-box::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--tech-color);
+  clip-path: circle(0% at 50% 100%);
+  transition: clip-path 0.6s var(--ease-out-expo);
+}
+
+.tech__icon-box svg {
+  transition: transform 0.6s var(--ease-out-expo);
+}
+
+.tech__card:hover .tech__icon-box {
+  color: var(--tech-on);
+  transform: rotate(-6deg) scale(1.06);
+}
+
+.tech__card:hover .tech__icon-box::before {
+  clip-path: circle(150% at 50% 100%);
+}
+
+.tech__card:hover .tech__icon-box svg {
+  transform: scale(1.12);
+}
+
+.tech__info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+  text-align: left;
+}
+
+.tech__name {
+  font-family: var(--font-display);
+  font-size: 0.98rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  color: var(--color-text);
+}
+
+.tech__category {
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+@media (max-width: 1100px) {
+  .tech__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+@media (max-width: 860px) {
+  .tech__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+@media (max-width: 640px) {
+  .tech__filters {
+    flex-wrap: nowrap;
+    justify-content: flex-start;
+    overflow-x: auto;
+    margin-left: calc(-1 * clamp(1.25rem, 3vw, 2.75rem));
+    margin-right: calc(-1 * clamp(1.25rem, 3vw, 2.75rem));
+    padding: 2px clamp(1.25rem, 3vw, 2.75rem);
+    scrollbar-width: none;
+  }
+  .tech__filters::-webkit-scrollbar { display: none; }
+  .tech__filter { flex-shrink: 0; }
+  .tech__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+  .tech__card { padding: 9px; gap: 10px; border-radius: 15px; }
+  .tech__icon-box { width: 40px; height: 40px; border-radius: 11px; }
+  .tech__icon-box svg { width: 19px; height: 19px; }
+  .tech__name { font-size: 0.82rem; }
+  .tech__category { font-size: 0.5rem; }
+}

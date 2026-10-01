@@ -1,0 +1,166 @@
+/* ============================================
+   LIVORA — SubPage Layout Styles
+   ============================================ */
+
+.subpage-wrapper {
+  position: relative;
+  overflow: hidden;
+  padding-top: 100px;
+  background: var(--color-bg);
+  min-height: 100vh;
+}
+
+.subpage-watermark {
+  position: absolute;
+  top: 6%;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: clamp(5rem, 16vw, 15rem);
+  font-weight: 900;
+  letter-spacing: -0.04em;
+  color: var(--color-text);
+  opacity: 0.02;
+  user-select: none;
+  pointer-events: none;
+  z-index: 0;
+}
+
+[data-theme="dark"] .subpage-watermark {
+  color: white;
+  opacity: 0.02;
+}
+
+/* Subpage Hero */
+.subpage-hero {
+  padding: var(--space-2xl) 0 var(--space-xl);
+  text-align: center;
+  position: relative;
+  z-index: 1;
+}
+
+.subpage-hero__content {
+  max-width: 800px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Breadcrumbs */
+.subpage-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--font-size-xs);
+  margin-bottom: var(--space-md);
+}
+
+.subpage-breadcrumb__home {
+  background: none;
+  border: none;
+  color: var(--color-accent);
+  font-weight: 700;
+  font-size: inherit;
+  cursor: pointer;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+}
+
+.subpage-breadcrumb__home:hover {
+  background: rgba(var(--accent-rgb), 0.08);
+  transform: translateX(-2px);
+}
+
+.subpage-breadcrumb__sep {
+  color: var(--color-text-secondary);
+  opacity: 0.4;
+}
+
+.subpage-breadcrumb__parent {
+  color: var(--color-text-secondary);
+  font-weight: 600;
+}
+
+.subpage-breadcrumb__current {
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+/* Title & Subtitle */
+.subpage-title {
+  font-size: clamp(2.2rem, 4.5vw, 3.4rem);
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.15;
+  color: var(--color-text);
+  margin-top: var(--space-xs);
+  margin-bottom: var(--space-sm);
+}
+
+.subpage-title-accent {
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.subpage-subtitle {
+  font-size: 1.1rem;
+  color: var(--color-text-secondary);
+  line-height: 1.7;
+  max-width: 680px;
+}
+
+/* Main content */
+.subpage-main {
+  position: relative;
+  z-index: 1;
+  padding-bottom: var(--space-2xl);
+}
+
+/* Bottom CTA */
+.subpage-cta-section {
+  padding: var(--space-2xl) 0 var(--space-3xl);
+  position: relative;
+  z-index: 1;
+}
+
+.subpage-cta-box {
+  padding: var(--space-2xl) var(--space-xl);
+  border-radius: var(--radius-xl);
+  max-width: 860px;
+  margin: 0 auto;
+  text-align: center;
+  background: linear-gradient(135deg, rgba(var(--accent-rgb), 0.06), rgba(var(--accent-rgb), 0.02));
+  border: 1px solid rgba(var(--accent-rgb), 0.2);
+  box-shadow: 0 20px 50px rgba(var(--shadow-rgb), 0.08);
+}
+
+.subpage-cta-title {
+  font-size: clamp(1.6rem, 3vw, 2.25rem);
+  font-weight: 800;
+  color: var(--color-text);
+  margin-bottom: var(--space-xs);
+  letter-spacing: -0.02em;
+}
+
+.subpage-cta-desc {
+  font-size: 1rem;
+  color: var(--color-text-secondary);
+  max-width: 580px;
+  margin: 0 auto var(--space-lg);
+  line-height: 1.6;
+}
+
+.subpage-cta-buttons {
+  display: flex;
+  gap: var(--space-md);
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+[data-theme="dark"] .subpage-cta-box {
+  background: rgba(var(--ink-rgb), 0.7);
+  border-color: rgba(255, 255, 255, 0.1);
+}

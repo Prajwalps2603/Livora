@@ -1,0 +1,678 @@
+.tbc {
+  position: relative;
+  overflow: hidden;
+}
+
+.tbc__head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: end;
+  margin-bottom: clamp(2rem, 4vw, 3.25rem);
+}
+
+.tbc__head .section-title {
+  margin-bottom: 0;
+}
+
+.tbc__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.92fr) minmax(0, 1.08fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: stretch;
+}
+
+/* --- Steps: an accordion that drives the stage --- */
+.tbc__steps {
+  border-top: 1px solid var(--color-text);
+}
+
+.tbc__step {
+  position: relative;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.tbc__step-head {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 50px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 10px;
+  padding: 20px 0;
+  text-align: left;
+  color: var(--color-text-muted);
+  transition: color 0.3s ease, padding 0.5s var(--ease-out-expo);
+}
+
+.tbc__step-head:hover {
+  color: var(--color-text);
+  padding-left: 8px;
+}
+
+.tbc__step.is-active .tbc__step-head {
+  color: var(--color-text);
+}
+
+.tbc__step-num {
+  width: 34px;
+  height: 34px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.tbc__step.is-active .tbc__step-num {
+  background: var(--lime);
+  border-color: var(--lime);
+  color: var(--ink);
+  box-shadow: 0 0 0 1px rgba(13, 13, 12, 0.35);
+}
+
+.tbc__step.is-done .tbc__step-num {
+  background: var(--color-text);
+  border-color: var(--color-text);
+  color: var(--surface-page);
+}
+
+.tbc__step-label {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 2.2vw, 1.85rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.1;
+}
+
+.tbc__step-badge {
+  padding: 4px 11px;
+  border-radius: 999px;
+  border: 1px solid var(--color-border);
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--color-text-secondary);
+}
+
+.tbc__step-body {
+  overflow: hidden;
+  padding-left: 60px;
+}
+
+.tbc__step-body h3 {
+  font-size: 1.02rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  font-family: var(--font-family);
+  margin-bottom: 8px;
+}
+
+.tbc__step-body p {
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--color-text-secondary);
+  margin-bottom: 14px;
+}
+
+.tbc__step-body ul {
+  display: grid;
+  gap: 9px;
+  padding-bottom: 24px;
+}
+
+.tbc__step-body li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+  font-weight: 500;
+}
+
+.tbc__step-body li span {
+  flex-shrink: 0;
+  width: 18px;
+  height: 18px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--lime);
+  color: var(--ink);
+}
+
+/* Countdown under the active step while it auto-advances */
+.tbc__step-timer {
+  position: absolute;
+  left: 0;
+  bottom: -1px;
+  height: 2px;
+  width: 100%;
+  background: var(--color-text);
+  transform-origin: left;
+  animation: tbcTimer linear both;
+}
+
+@keyframes tbcTimer {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+/* --- Stage --- */
+.tbc__stage-wrap {
+  position: relative;
+  display: grid;
+  min-height: 440px;
+  padding: clamp(1rem, 2.2vw, 1.75rem);
+  border-radius: 26px;
+  background:
+    radial-gradient(var(--color-border) 1px, transparent 1.2px) 0 0 / 18px 18px,
+    var(--surface-card);
+  border: 1px solid var(--color-border);
+}
+
+.tbc__stage-caption {
+  position: absolute;
+  top: 14px;
+  right: 18px;
+  z-index: 3;
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.tbc__stage-motion {
+  display: grid;
+  align-items: center;
+  padding-top: 22px;
+}
+
+.tbc-stage {
+  width: 100%;
+}
+
+.tbc-stage__pill {
+  margin-left: auto;
+}
+
+/* Stage 1: prototype */
+.tbc-proto__canvas {
+  position: relative;
+  display: grid;
+  gap: 10px;
+  padding: 16px;
+}
+
+.tbc-wire {
+  border: 1.5px dashed var(--color-text-muted);
+  border-radius: 10px;
+  min-height: 56px;
+  opacity: 0.75;
+}
+
+.tbc-wire i,
+.tbc-wire b {
+  display: block;
+  height: 7px;
+  border-radius: 4px;
+  background: var(--tint);
+}
+
+.tbc-wire--nav {
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+}
+
+.tbc-wire--nav i { width: 44px; }
+.tbc-wire--nav b { width: 60px; margin-left: auto; background: var(--color-text-muted); }
+
+.tbc-wire--hero {
+  display: grid;
+  align-content: center;
+  gap: 8px;
+  padding: 14px;
+}
+
+.tbc-wire--hero i:first-child { width: 55%; height: 12px; background: var(--color-text-muted); opacity: 0.6; }
+.tbc-wire--hero i:last-child { width: 36%; }
+
+.tbc-wire-row {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.tbc-wire--list {
+  display: grid;
+  gap: 8px;
+  padding: 12px;
+  min-height: 0;
+}
+
+.tbc-wire--list i:nth-child(2) { width: 80%; }
+.tbc-wire--list i:nth-child(3) { width: 58%; }
+
+.tbc-wire-btn {
+  justify-self: end;
+  padding: 8px 18px;
+  border-radius: 999px;
+  background: var(--color-text);
+  color: var(--surface-card);
+  font-size: 0.76rem;
+  font-weight: 600;
+  animation: tbcBtnPress 5s var(--ease-out-expo) infinite;
+}
+
+@keyframes tbcBtnPress {
+  0%, 62%, 74%, 100% { transform: scale(1); background: var(--color-text); color: var(--surface-card); }
+  66%, 70% { transform: scale(0.92); background: var(--lime); color: var(--ink); }
+}
+
+.tbc-hotspot {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  margin: -8px 0 0 -8px;
+  border-radius: 50%;
+  background: var(--lime);
+  box-shadow: 0 0 0 1px rgba(13, 13, 12, 0.5);
+  animation: tbcHotspot 1.8s ease-out infinite;
+}
+
+.tbc-hotspot--1 { left: 78%; top: 13%; }
+.tbc-hotspot--2 { left: 30%; top: 56%; animation-delay: 0.5s; }
+.tbc-hotspot--3 { left: 86%; top: 91%; animation-delay: 1s; }
+
+@keyframes tbcHotspot {
+  0% { box-shadow: 0 0 0 1px rgba(13, 13, 12, 0.5), 0 0 0 0 rgba(var(--lime-rgb), 0.7); }
+  100% { box-shadow: 0 0 0 1px rgba(13, 13, 12, 0.5), 0 0 0 14px rgba(var(--lime-rgb), 0); }
+}
+
+/* The pointer tours the three hotspots and clicks the last one */
+.tbc-cursor {
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 2;
+  color: var(--color-text);
+  filter: drop-shadow(0 4px 6px rgba(13, 13, 12, 0.35));
+  animation: tbcCursor 5s var(--ease-out-expo) infinite;
+}
+
+.tbc-cursor svg {
+  fill: var(--surface-card);
+}
+
+@keyframes tbcCursor {
+  0% { left: 50%; top: 104%; opacity: 0; }
+  10% { left: 78%; top: 14%; opacity: 1; }
+  28% { left: 78%; top: 14%; }
+  40%, 52% { left: 30%; top: 57%; }
+  64%, 82% { left: 86%; top: 92%; }
+  100% { left: 96%; top: 108%; opacity: 0; }
+}
+
+.tbc-feedback {
+  position: absolute;
+  left: 8%;
+  bottom: 10%;
+  padding: 10px 16px 12px;
+  background: #FFFEF8;
+  border: 1px solid rgba(13, 13, 12, 0.14);
+  border-radius: 3px;
+  box-shadow: 0 18px 30px -18px rgba(13, 13, 12, 0.55);
+  color: var(--ink);
+  font-family: var(--font-hand);
+  font-size: 1.45rem;
+  font-weight: 600;
+  line-height: 1.1;
+  transform: rotate(-3deg);
+  animation: tbcFeedback 5s var(--ease-out-expo) infinite;
+}
+
+.tbc-feedback span {
+  display: block;
+  margin-bottom: 4px;
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--lime-deep);
+}
+
+@keyframes tbcFeedback {
+  0%, 44% { opacity: 0; transform: rotate(-9deg) translateY(16px) scale(0.9); }
+  52%, 94% { opacity: 1; transform: rotate(-3deg) translateY(0) scale(1); }
+  100% { opacity: 0; transform: rotate(-3deg) translateY(0) scale(1); }
+}
+
+/* Stage 2: evaluation build */
+.tbc-eval__canvas {
+  position: relative;
+  display: grid;
+  gap: 10px;
+  padding: 16px 132px 16px 16px;
+}
+
+.tbc-eval__chart .sys-bars {
+  height: 92px;
+}
+
+.tbc-eval__chart .sys-bars span {
+  animation: tbcGrow 0.9s var(--ease-out-expo) both;
+}
+
+@keyframes tbcGrow {
+  from { transform: scaleY(0.04); }
+  to { transform: scaleY(1); }
+}
+
+.tbc-eval__checks {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 14px;
+  padding: 10px 12px;
+  border: 1px dashed var(--card-border);
+  border-radius: 10px;
+  font-size: 0.78rem;
+  font-weight: 500;
+}
+
+.tbc-eval__checks li {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0;
+  animation: tbcCheckIn 0.5s var(--ease-out-expo) forwards;
+}
+
+.tbc-eval__checks li span {
+  width: 16px;
+  height: 16px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  background: var(--lime);
+  color: var(--ink);
+}
+
+.tbc-eval__checks .tbc-eval__checks-title {
+  opacity: 1;
+  animation: none;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+@keyframes tbcCheckIn {
+  from { opacity: 0; transform: translateX(-8px); }
+  to { opacity: 1; transform: none; }
+}
+
+.tbc-eval__phone {
+  position: absolute;
+  top: 6px;
+  right: 14px;
+  bottom: -22px;
+  width: 108px;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  padding: 24px 10px 12px;
+  border-radius: 22px;
+  border: 5px solid var(--ink);
+  background: var(--surface-card);
+  box-shadow: -16px 22px 34px -20px rgba(13, 13, 12, 0.6);
+  transform: rotate(4deg);
+  animation: tbcPhoneIn 0.9s var(--ease-out-expo) both;
+}
+
+[data-theme="dark"] .tbc-eval__phone {
+  border-color: #3A3A36;
+}
+
+@keyframes tbcPhoneIn {
+  from { opacity: 0; transform: translateY(40px) rotate(10deg); }
+  to { opacity: 1; transform: rotate(4deg); }
+}
+
+.tbc-eval__phone-notch {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  width: 34px;
+  height: 5px;
+  margin-left: -17px;
+  border-radius: 3px;
+  background: var(--color-text-muted);
+  opacity: 0.5;
+}
+
+.tbc-eval__phone strong {
+  font-family: var(--font-display);
+  font-size: 1.7rem;
+  letter-spacing: -0.04em;
+  line-height: 1;
+}
+
+.tbc-eval__phone-row {
+  height: 20px;
+  border-radius: 6px;
+  background: var(--tint);
+}
+
+.tbc-eval__phone-cta {
+  margin-top: auto;
+  padding: 7px 4px;
+  border-radius: 8px;
+  background: var(--lime);
+  color: var(--ink);
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-align: center;
+}
+
+/* Stage 3: sign-off sheet */
+.tbc-decision {
+  display: grid;
+  place-items: center;
+  padding: 10px 0 18px;
+}
+
+.tbc-sheet {
+  position: relative;
+  width: min(100%, 380px);
+  padding: 26px 28px 30px;
+  background: #FFFEF8;
+  border: 1px solid rgba(13, 13, 12, 0.14);
+  border-radius: 4px;
+  box-shadow: 0 30px 50px -30px rgba(13, 13, 12, 0.6);
+  color: var(--ink);
+  transform: rotate(-2deg);
+}
+
+.tbc-sheet__pin {
+  position: absolute;
+  top: -11px;
+  left: 50%;
+  width: 22px;
+  height: 22px;
+  margin-left: -11px;
+  border-radius: 50%;
+  background: var(--lime);
+  box-shadow: 0 4px 8px -2px rgba(13, 13, 12, 0.4);
+}
+
+.tbc-sheet__kicker {
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #63635C;
+}
+
+.tbc-sheet__title {
+  margin: 4px 0 16px;
+  font-size: 1.7rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+}
+
+.tbc-sheet ul {
+  display: grid;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.tbc-sheet li {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+/* Each box ticks itself in sequence */
+.tbc-sheet__box {
+  flex-shrink: 0;
+  width: 22px;
+  height: 22px;
+  display: grid;
+  place-items: center;
+  border-radius: 6px;
+  border: 1.5px solid var(--ink);
+  color: transparent;
+  animation: tbcTick 0.4s var(--ease-out-expo) forwards;
+  animation-delay: var(--d);
+}
+
+@keyframes tbcTick {
+  0% { background: transparent; color: transparent; transform: scale(1); }
+  60% { transform: scale(1.25); }
+  100% { background: var(--lime); color: var(--ink); transform: scale(1); }
+}
+
+.tbc-sheet__switch {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px dashed rgba(13, 13, 12, 0.25);
+  font-weight: 700;
+}
+
+.tbc-sheet__switch i {
+  position: relative;
+  width: 54px;
+  height: 30px;
+  border-radius: 999px;
+  background: rgba(13, 13, 12, 0.14);
+  animation: tbcSwitchBg 0.5s ease forwards;
+  animation-delay: 2.2s;
+}
+
+.tbc-sheet__switch b {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(13, 13, 12, 0.35);
+  animation: tbcSwitchKnob 0.5s var(--ease-out-expo) forwards;
+  animation-delay: 2.2s;
+}
+
+@keyframes tbcSwitchBg {
+  to { background: var(--lime); }
+}
+
+@keyframes tbcSwitchKnob {
+  to { transform: translateX(24px); background: var(--ink); }
+}
+
+.tbc-sheet__stamp {
+  position: absolute;
+  right: -18px;
+  top: 30px;
+  padding: 6px 14px;
+  border: 2px solid var(--lime-deep);
+  border-radius: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--lime-deep);
+  background: #FFFEF8;
+  opacity: 0;
+  transform: rotate(12deg) scale(1.6);
+  animation: tbcStamp 0.45s cubic-bezier(0.2, 1.6, 0.4, 1) forwards;
+  animation-delay: 2.8s;
+}
+
+@keyframes tbcStamp {
+  to { opacity: 1; transform: rotate(12deg) scale(1); }
+}
+
+/* --- Bottom row --- */
+.tbc__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  flex-wrap: wrap;
+  margin-top: clamp(1.75rem, 3vw, 2.75rem);
+  padding-top: 22px;
+  border-top: 1px dashed var(--color-border);
+}
+
+.tbc__note {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  color: var(--color-text-secondary);
+}
+
+.tbc__note::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 2px;
+  background: var(--lime);
+  box-shadow: 0 0 0 1px rgba(13, 13, 12, 0.3);
+}
+
+@media (max-width: 1024px) {
+  .tbc__head,
+  .tbc__layout { grid-template-columns: minmax(0, 1fr); }
+  .tbc__head { align-items: start; }
+}
+
+@media (max-width: 640px) {
+  .tbc__step-head { grid-template-columns: 44px minmax(0, 1fr); }
+  .tbc__step-badge { display: none; }
+  .tbc__step-body { padding-left: 0; }
+  .tbc__stage-wrap { min-height: 380px; padding: 12px; }
+  .tbc-eval__canvas { padding-right: 16px; }
+  .tbc-eval__phone { display: none; }
+  .tbc-feedback { font-size: 1.2rem; }
+  .tbc-sheet__stamp { right: -6px; }
+  .tbc__footer .btn { width: 100%; justify-content: center; }
+}

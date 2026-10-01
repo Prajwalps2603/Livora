@@ -1,0 +1,483 @@
+.team {
+  position: relative;
+  overflow: hidden;
+  padding: var(--space-4xl) 0;
+}
+
+.team__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 28px;
+  max-width: 1080px;
+  margin: 0 auto;
+}
+
+.team__card {
+  padding: 10px 10px 22px;
+  border-radius: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+/* --- Banner --- */
+.team__banner {
+  position: relative;
+  height: 150px;
+  border-radius: 20px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.team__banner::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background:
+    radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.35), transparent 45%),
+    radial-gradient(circle at 10% 110%, rgba(0, 0, 0, 0.25), transparent 50%);
+}
+
+.team__banner-grid {
+  position: absolute;
+  inset: -24px;
+  z-index: -1;
+  background-image:
+    linear-gradient(to right, rgba(255, 255, 255, 0.14) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.14) 1px, transparent 1px);
+  background-size: 24px 24px;
+  -webkit-mask-image: linear-gradient(120deg, #000 10%, transparent 80%);
+  mask-image: linear-gradient(120deg, #000 10%, transparent 80%);
+  transition: transform 1.2s var(--ease-out-expo);
+}
+
+.team__card:hover .team__banner-grid {
+  transform: translate(12px, 12px);
+}
+
+.team__banner-initial {
+  position: absolute;
+  right: 22px;
+  bottom: -64px;
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 13rem;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.2);
+  transition: transform 0.9s var(--ease-out-expo);
+}
+
+.team__card:hover .team__banner-initial {
+  transform: translateY(-12px) rotate(-6deg);
+}
+
+.team__banner-index {
+  position: absolute;
+  top: 16px;
+  left: 18px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.team__banner-chip {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  backdrop-filter: blur(8px);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 600;
+}
+
+.team__pulse-circle {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--accent-text);
+  animation: livePing 1.6s ease-out infinite;
+}
+
+/* --- Identity --- */
+.team__card-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  margin-top: 0;
+  padding: 0 14px;
+  position: relative;
+  z-index: 2;
+}
+
+.team__avatar-wrap {
+  position: relative;
+  width: 104px;
+  height: 104px;
+  flex-shrink: 0;
+  display: grid;
+  place-items: center;
+  margin-top: -64px;
+}
+
+.team__avatar-ring {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  background: conic-gradient(from var(--spin), var(--brand-1), var(--brand-2), var(--brand-3), var(--brand-1));
+  animation: spinBorder 4s linear infinite;
+}
+
+.team__avatar-ring::after {
+  content: '';
+  position: absolute;
+  inset: 4px;
+  border-radius: 50%;
+  background: var(--surface-card);
+}
+
+.team__avatar {
+  position: relative;
+  width: 86px;
+  height: 86px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, 0.3), 0 12px 24px -10px rgba(var(--shadow-rgb), 0.6);
+  transition: transform 0.6s var(--ease-out-expo);
+}
+
+.team__card:hover .team__avatar {
+  transform: scale(1.06) rotate(-4deg);
+}
+
+.team__avatar-initials {
+  font-size: 1.9rem;
+  font-weight: 800;
+  letter-spacing: -0.04em;
+  color: #fff;
+}
+
+.team__header-info {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding-top: 2px;
+  min-width: 0;
+}
+
+.team__name {
+  font-size: 1.55rem;
+  font-weight: 800;
+  letter-spacing: -0.035em;
+  line-height: 1.1;
+  color: var(--color-text);
+}
+
+.team__role {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+}
+
+.team__specialty-tag {
+  align-self: flex-start;
+  margin-top: 6px;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--brand-2);
+  background: var(--gradient-brand-soft);
+  border: 1px solid rgba(var(--accent-rgb), 0.18);
+}
+
+/* --- Quote --- */
+.team__quote-box {
+  position: relative;
+  margin: 0 14px;
+  padding: 18px 18px 18px 54px;
+  border-radius: 16px;
+  background: var(--surface-page);
+  border: 1px solid var(--card-border);
+}
+
+.team__quote-mark {
+  position: absolute;
+  left: 14px;
+  top: -6px;
+  font-family: var(--font-serif);
+  font-size: 4.5rem;
+  line-height: 1;
+  background: var(--gradient-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.team__quote {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 1.15rem;
+  line-height: 1.45;
+  color: var(--color-text);
+}
+
+/* --- Skills --- */
+.team__skills {
+  padding: 0 14px;
+}
+
+.team__skills-label {
+  display: block;
+  margin-bottom: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.team__skills-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.team__skill-chip {
+  padding: 6px 12px;
+  border-radius: 999px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--color-text);
+  background: var(--surface-card);
+  border: 1px solid var(--card-border);
+  box-shadow: 0 2px 6px -2px rgba(var(--ink-rgb), 0.08);
+  transition: transform 0.3s var(--ease-out-expo), background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.team__skill-chip:hover {
+  transform: translateY(-2px);
+  color: #fff;
+  background: var(--gradient-brand);
+  border-color: transparent;
+}
+
+/* --- Actions --- */
+.team__actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  padding: 0 14px;
+}
+
+.team__action-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: 0;
+  padding: 12px 14px;
+  border-radius: 14px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  transition: transform 0.35s var(--ease-out-expo), box-shadow 0.35s ease, background 0.3s ease;
+}
+
+.team__action-btn span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.team__action-btn--whatsapp {
+  color: #fff;
+  background: linear-gradient(135deg, #25D366, #128C7E);
+  box-shadow: 0 10px 22px -10px rgba(18, 140, 126, 0.8);
+}
+
+.team__action-btn--email {
+  color: var(--color-text);
+  background: var(--surface-card);
+  border: 1px solid var(--card-border);
+}
+
+.team__action-btn:hover {
+  transform: translateY(-2px);
+}
+
+.team__action-btn--email:hover {
+  box-shadow: var(--shadow-card);
+}
+
+/* --- Footer --- */
+.team__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin: 0 14px;
+  padding-top: 16px;
+  border-top: 1px dashed var(--card-border);
+}
+
+.team__available-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+.team__socials {
+  display: flex;
+  gap: 8px;
+}
+
+.team__social {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  color: var(--color-text-secondary);
+  border: 1px solid var(--card-border);
+  background: var(--surface-card);
+  transition: transform 0.35s var(--ease-out-expo), color 0.3s ease, background 0.3s ease;
+}
+
+.team__social:hover {
+  transform: translateY(-2px) rotate(-8deg);
+  color: var(--surface-card);
+  background: var(--color-text);
+}
+
+@media (max-width: 900px) {
+  .team__grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 480px) {
+  .team__actions { grid-template-columns: 1fr; }
+  .team__card-header { flex-direction: column; align-items: flex-start; }
+  .team__name { font-size: 1.35rem; }
+  .team__banner-chip { display: none; }
+}
+
+/* ============================================
+   Ink and lime treatment
+   ============================================ */
+.team__banner {
+  background: var(--ink);
+}
+
+.team__banner::after {
+  background: radial-gradient(circle at 85% 10%, rgba(var(--lime-rgb), 0.4), transparent 50%);
+}
+
+.team__banner-grid {
+  background-image:
+    linear-gradient(to right, rgba(var(--lime-rgb), 0.18) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(var(--lime-rgb), 0.18) 1px, transparent 1px);
+}
+
+.team__banner-initial {
+  font-family: var(--font-display);
+  font-style: normal;
+  font-weight: 800;
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgba(var(--lime-rgb), 0.6);
+}
+
+.team__banner-index {
+  color: rgba(244, 244, 239, 0.8);
+}
+
+.team__banner-chip {
+  background: rgba(244, 244, 239, 0.08);
+  border-color: rgba(244, 244, 239, 0.2);
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 0.64rem;
+}
+
+.team__pulse-circle {
+  background: var(--lime);
+}
+
+.team__avatar-ring {
+  background: conic-gradient(from var(--spin), var(--lime), var(--ink), var(--lime));
+}
+
+.team__avatar {
+  background: var(--lime);
+  box-shadow: none;
+}
+
+.team__avatar-initials {
+  font-family: var(--font-display);
+  color: var(--ink);
+}
+
+.team__specialty-tag {
+  color: var(--color-text-secondary);
+  background: transparent;
+  border-color: var(--color-border);
+}
+
+.team__quote-mark {
+  font-family: var(--font-display);
+  font-weight: 800;
+  color: var(--accent-text);
+  -webkit-text-fill-color: var(--accent-text);
+  background: none;
+}
+
+.team__quote {
+  font-family: var(--font-hand);
+  font-style: normal;
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.team__skill-chip {
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  box-shadow: none;
+}
+
+.team__skill-chip:hover {
+  color: var(--ink);
+  background: var(--lime);
+  border-color: var(--lime);
+}
+
+.team__action-btn--whatsapp {
+  background: var(--btn-bg);
+  color: var(--btn-fg);
+  box-shadow: none;
+}
+
+.team__action-btn--whatsapp:hover {
+  background: var(--lime);
+  color: var(--ink);
+}
+
+.team__banner-initial {
+  color: rgba(var(--lime-rgb), 0.16);
+  -webkit-text-stroke: 0;
+}
+
+[data-theme="dark"] .team__banner::after {
+  background: radial-gradient(circle at 85% 10%, rgba(var(--lime-rgb), 0.16), transparent 50%);
+}

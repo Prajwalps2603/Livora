@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 400" width="640" height="400" font-family="Inter, 'Segoe UI', Arial, sans-serif">
+<defs>
+  <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#0D0D0C"/><stop offset="1" stop-color="#22221F"/></linearGradient>
+  <radialGradient id="glowA" cx="0.85" cy="0.1" r="0.6"><stop offset="0" stop-color="#C8F53B" stop-opacity="0.55"/><stop offset="1" stop-color="#C8F53B" stop-opacity="0"/></radialGradient>
+  <radialGradient id="glowB" cx="0.05" cy="0.95" r="0.55"><stop offset="0" stop-color="#ffffff" stop-opacity="0.18"/><stop offset="1" stop-color="#ffffff" stop-opacity="0"/></radialGradient>
+  <pattern id="grid" width="32" height="32" patternUnits="userSpaceOnUse"><path d="M32 0H0V32" fill="none" stroke="rgba(255,255,255,0.07)" stroke-width="1"/></pattern>
+  <filter id="sh" x="-20%" y="-20%" width="140%" height="160%"><feDropShadow dx="0" dy="14" stdDeviation="14" flood-color="#0b0820" flood-opacity="0.35"/></filter>
+  <filter id="shs" x="-20%" y="-20%" width="140%" height="160%"><feDropShadow dx="0" dy="6" stdDeviation="6" flood-color="#0b0820" flood-opacity="0.25"/></filter>
+</defs>
+<rect width="640" height="400" fill="url(#bg)"/>
+<rect width="640" height="400" fill="url(#grid)"/>
+<rect width="640" height="400" fill="url(#glowA)"/>
+<rect width="640" height="400" fill="url(#glowB)"/>
+<defs><linearGradient id="carBody" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fbfbf8"/><stop offset="1" stop-color="#b7b7b4"/></linearGradient></defs><path d="M150 0 L510 0 L440 330 L220 330 Z" fill="#fbfbf8" opacity="0.07"/><ellipse cx="346" cy="322" rx="200" ry="26" fill="#000" opacity="0.35"/><ellipse cx="346" cy="316" rx="190" ry="22" fill="none" stroke="#b7b7b4" stroke-opacity="0.55" stroke-width="2"/><g filter="url(#sh)" transform="translate(16 4)">
+  <path d="M160 300 L160 268 Q162 252 180 247 L240 234 Q275 198 330 192 L408 192 Q442 195 468 226 L508 240 Q530 247 532 266 L532 300 Z" fill="url(#carBody)"/>
+  <path d="M254 232 Q282 206 330 201 L364 201 L364 232 Z" fill="#d2d2cf"/>
+  <path d="M376 201 L404 201 Q428 204 448 232 L376 232 Z" fill="#d2d2cf" opacity="0.8"/>
+  <path d="M170 264 L530 264" stroke="#fbfbf8" stroke-opacity="0.5" stroke-width="2"/>
+  <rect x="506" y="248" width="22" height="8" rx="4" fill="#C8F53B"/>
+  <rect x="162" y="252" width="14" height="8" rx="4" fill="#C8F53B"/>
+  <circle cx="228" cy="300" r="30" fill="#1b1b1a"/><circle cx="228" cy="300" r="13" fill="#b7b7b4"/>
+  <circle cx="460" cy="300" r="30" fill="#1b1b1a"/><circle cx="460" cy="300" r="13" fill="#b7b7b4"/>
+</g><g filter="url(#shs)"><rect x="36" y="36" width="174" height="34" rx="17.0" fill="#fbfbf8"/></g><circle cx="54" cy="53.0" r="6" fill="#C8F53B"/><text x="68" y="57.0" font-size="12" font-weight="700" fill="#1f1f1e">Vehicles in stock: 42</text><g filter="url(#shs)"><rect x="444" y="60" width="168" height="46" rx="12" fill="#fbfbf8"/></g><circle cx="462" cy="83.0" r="6" fill="#C8F53B"/><text x="476" y="80" font-size="12" font-weight="700" fill="#1f1f1e">Test drive booked</text><text x="476" y="96" font-size="10" fill="#727270">Today · 4:30 PM</text><g filter="url(#shs)"><rect x="36" y="88" width="150" height="74" rx="14" fill="#fbfbf8"/></g><text x="52" y="112" font-size="10" fill="#727270">Monthly sales</text><text x="52" y="142" font-size="22" font-weight="800" fill="#1f1f1e">+28</text><rect x="116" y="138" width="7" height="10" rx="2" fill="#C8F53B" opacity="0.40"/><rect x="128" y="132" width="7" height="16" rx="2" fill="#C8F53B" opacity="0.52"/><rect x="140" y="136" width="7" height="12" rx="2" fill="#C8F53B" opacity="0.64"/><rect x="152" y="126" width="7" height="22" rx="2" fill="#C8F53B" opacity="0.76"/><rect x="164" y="120" width="7" height="28" rx="2" fill="#C8F53B" opacity="0.88"/>
+</svg>

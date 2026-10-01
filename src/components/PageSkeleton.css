@@ -1,0 +1,363 @@
+/* ============================================
+   LIVORA — Page Skeleton Theme & Shimmer System
+   ============================================ */
+
+.page-skeleton {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: var(--color-bg);
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 24px 0 60px;
+  pointer-events: none;
+}
+
+.skeleton-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* --- Universal Shimmer Animation --- */
+.skeleton-shimmer {
+  position: relative;
+  overflow: hidden;
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: var(--radius-sm);
+}
+
+.skeleton-shimmer::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  transform: translateX(-100%);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.65),
+    transparent
+  );
+  animation: skeletonShimmer 1.6s infinite;
+}
+
+@keyframes skeletonShimmer {
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Dark Theme Shimmer */
+[data-theme="dark"] .page-skeleton {
+  background: var(--surface-card);
+}
+
+[data-theme="dark"] .skeleton-shimmer {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="dark"] .skeleton-shimmer::after {
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.12),
+    transparent
+  );
+}
+
+/* --- Navbar Skeleton --- */
+.skeleton-navbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  border-radius: var(--radius-full);
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid var(--glass-border);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+  margin-bottom: 60px;
+}
+
+[data-theme="dark"] .skeleton-navbar {
+  background: rgba(var(--ink-rgb), 0.6);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.skeleton-logo {
+  width: 110px;
+  height: 28px;
+  border-radius: 8px;
+}
+
+.skeleton-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.skeleton-nav-pill {
+  width: 64px;
+  height: 24px;
+  border-radius: var(--radius-full);
+}
+
+.skeleton-nav-btn {
+  width: 120px;
+  height: 38px;
+  border-radius: var(--radius-full);
+}
+
+/* --- Hero Section Skeleton --- */
+.skeleton-hero {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: var(--space-3xl);
+  align-items: center;
+  margin-bottom: 90px;
+}
+
+.skeleton-hero-left {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: left;
+}
+
+.skeleton-badge {
+  width: 220px;
+  height: 26px;
+  border-radius: var(--radius-full);
+  margin-bottom: 8px;
+}
+
+.skeleton-title {
+  width: 100%;
+  height: 52px;
+  border-radius: 12px;
+}
+
+.skeleton-title--half {
+  width: 65%;
+}
+
+.skeleton-desc {
+  width: 90%;
+  height: 18px;
+  border-radius: 6px;
+}
+
+.skeleton-desc--short {
+  width: 70%;
+}
+
+.skeleton-actions {
+  display: flex;
+  gap: 16px;
+  margin-top: 12px;
+}
+
+.skeleton-btn-primary {
+  width: 160px;
+  height: 48px;
+  border-radius: var(--radius-full);
+}
+
+.skeleton-btn-secondary {
+  width: 160px;
+  height: 48px;
+  border-radius: var(--radius-full);
+}
+
+/* Dashboard Skeleton */
+.skeleton-dashboard {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-xl);
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
+  padding: 20px;
+}
+
+[data-theme="dark"] .skeleton-dashboard {
+  background: rgba(var(--ink-rgb), 0.7);
+  border-color: rgba(255, 255, 255, 0.08);
+}
+
+.skeleton-dash-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.skeleton-dots {
+  display: flex;
+  gap: 6px;
+}
+
+.skeleton-dots span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="dark"] .skeleton-dots span {
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.skeleton-dash-title {
+  width: 140px;
+  height: 20px;
+  border-radius: 6px;
+}
+
+.skeleton-dash-body {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 16px;
+}
+
+.skeleton-dash-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.skeleton-dash-nav-item {
+  width: 100%;
+  height: 32px;
+  border-radius: 8px;
+}
+
+.skeleton-dash-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.skeleton-dash-stats {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.skeleton-stat-card {
+  height: 70px;
+  border-radius: 10px;
+}
+
+.skeleton-dash-chart {
+  height: 130px;
+  border-radius: 12px;
+}
+
+/* --- Section Header Skeleton --- */
+.skeleton-section-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 48px;
+}
+
+.skeleton-title--center {
+  width: 380px;
+  height: 40px;
+}
+
+.skeleton-desc--center {
+  width: 480px;
+  height: 18px;
+}
+
+/* --- Grid 4 Skeleton (Services / Solutions / Portfolio) --- */
+.skeleton-grid-4 {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-lg);
+}
+
+.skeleton-card {
+  background: rgba(255, 255, 255, 0.7);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+}
+
+[data-theme="dark"] .skeleton-card {
+  background: rgba(var(--ink-rgb), 0.65);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+.skeleton-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.skeleton-card-icon {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+}
+
+.skeleton-card-tag {
+  width: 60px;
+  height: 18px;
+  border-radius: var(--radius-full);
+}
+
+.skeleton-card-title {
+  width: 75%;
+  height: 22px;
+  border-radius: 6px;
+}
+
+.skeleton-card-desc {
+  width: 100%;
+  height: 14px;
+  border-radius: 4px;
+}
+
+.skeleton-card-desc--short {
+  width: 60%;
+}
+
+.skeleton-card-footer {
+  display: flex;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.skeleton-card-pill {
+  width: 50px;
+  height: 18px;
+  border-radius: var(--radius-full);
+}
+
+/* --- Responsive --- */
+@media (max-width: 1024px) {
+  .skeleton-hero {
+    grid-template-columns: 1fr;
+  }
+  .skeleton-grid-4 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .skeleton-grid-4 {
+    grid-template-columns: 1fr;
+  }
+  .skeleton-nav-links {
+    display: none;
+  }
+}

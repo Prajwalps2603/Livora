@@ -1,0 +1,122 @@
+.ps {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  padding: 6px 6px 6px 18px;
+  margin-bottom: var(--space-lg);
+  border-radius: 999px;
+  background: var(--surface-card);
+  border: 1px solid var(--card-border);
+  box-shadow: var(--shadow-card);
+  font-size: 0.875rem;
+}
+
+.ps__label {
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.ps__problem-window {
+  position: relative;
+  display: inline-flex;
+  min-width: 9.5em;
+  height: 1.6em;
+  align-items: center;
+  overflow: hidden;
+}
+
+.ps__problem {
+  position: relative;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  color: #E11D48;
+  white-space: nowrap;
+}
+
+.ps__strike {
+  position: absolute;
+  left: -2px;
+  right: -2px;
+  top: 52%;
+  height: 2px;
+  border-radius: 2px;
+  background: #E11D48;
+  transform-origin: left;
+}
+
+.ps__arrow {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  color: var(--brand-2);
+}
+
+.ps__arrow-track {
+  width: 26px;
+  height: 2px;
+  margin-right: -4px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, transparent, var(--brand-2));
+  background-size: 200% 100%;
+  animation: psFlow 1.4s linear infinite;
+}
+
+@keyframes psFlow {
+  from { background-position: 100% 0; }
+  to { background-position: -100% 0; }
+}
+
+.ps__solution {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 18px;
+  border-radius: 999px;
+  color: var(--ink);
+  font-weight: 600;
+  background: var(--gradient-brand);
+  background-size: 200% 100%;
+  box-shadow: 0 10px 24px -10px rgba(var(--shadow-rgb), 0.7), inset 0 1px 0 rgba(255, 255, 255, 0.25);
+  animation: psShift 6s ease-in-out infinite;
+  overflow: hidden;
+}
+
+.ps__solution::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(110deg, transparent 35%, rgba(255, 255, 255, 0.4) 50%, transparent 65%);
+  transform: translateX(-100%);
+  animation: psShine 3.2s ease-in-out infinite;
+}
+
+@keyframes psShift {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+@keyframes psShine {
+  0%, 60% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.ps__sparkle {
+  animation: psTwinkle 2s ease-in-out infinite;
+}
+
+@keyframes psTwinkle {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  50% { transform: scale(1.25) rotate(20deg); }
+}
+
+@media (max-width: 640px) {
+  .ps {
+    border-radius: 22px;
+    padding: 12px;
+  }
+  .ps__arrow { display: none; }
+  .ps__solution { width: 100%; justify-content: center; }
+}

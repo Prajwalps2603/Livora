@@ -1,0 +1,179 @@
+/* --- Services: an index, not a card grid --- */
+.services__header {
+  display: grid;
+  grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 4vw, 4rem);
+  align-items: end;
+  margin-bottom: clamp(2rem, 4vw, 3.5rem);
+}
+
+.services__header .section-title {
+  margin-bottom: 0;
+}
+
+.services__header .section-subtitle {
+  padding-bottom: 6px;
+}
+
+.services__list {
+  border-top: 1px solid var(--color-text);
+}
+
+.svc {
+  position: relative;
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1.05fr) minmax(0, 1.2fr) auto 52px;
+  gap: clamp(1rem, 2.4vw, 2.5rem);
+  align-items: center;
+  padding: clamp(1.1rem, 2vw, 1.7rem) clamp(0.5rem, 1.4vw, 1.25rem);
+  border-bottom: 1px solid var(--color-border);
+  cursor: pointer;
+  isolation: isolate;
+  transition: color 0.3s ease, padding 0.5s var(--ease-out-expo);
+}
+
+/* Lime fill rises from the bottom of the row */
+.svc::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--lime);
+  transform: scaleY(0);
+  transform-origin: bottom;
+  transition: transform 0.5s var(--ease-out-expo);
+}
+
+.svc:hover {
+  color: var(--ink);
+  padding-left: clamp(1rem, 2.4vw, 2.25rem);
+}
+
+.svc:hover::before {
+  transform: scaleY(1);
+}
+
+.svc__num {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  color: var(--color-text-muted);
+  transition: color 0.3s ease;
+}
+
+.svc__head {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  min-width: 0;
+}
+
+.svc__icon {
+  flex-shrink: 0;
+  width: 46px;
+  height: 46px;
+  display: grid;
+  place-items: center;
+  border-radius: 12px;
+  border: 1px solid var(--color-border);
+  transition: transform 0.6s var(--ease-out-expo), background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.svc:hover .svc__icon {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--lime);
+  transform: rotate(-8deg) scale(1.06);
+}
+
+.svc:hover .svc__icon svg :is(path, circle, rect, line, polyline, polygon, ellipse) {
+  stroke-dasharray: 200;
+  animation: iconDraw 1.1s var(--ease-out-expo) both;
+}
+
+.svc__title {
+  font-size: clamp(1.25rem, 2.3vw, 2.05rem);
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+}
+
+.svc__desc {
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--color-text-secondary);
+  transition: color 0.3s ease;
+}
+
+.svc__replaces {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 8px;
+  margin-top: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+}
+
+.svc__replaces s {
+  padding: 3px 8px;
+  border-radius: 6px;
+  border: 1px dashed var(--color-border);
+  color: var(--color-text-muted);
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.svc__replaces span {
+  font-weight: 600;
+}
+
+.svc__tag {
+  padding: 5px 12px;
+  border-radius: 999px;
+  border: 1px solid var(--color-border);
+  font-family: var(--font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  color: var(--color-text-secondary);
+  transition: color 0.3s ease, border-color 0.3s ease;
+}
+
+.svc:hover :is(.svc__num, .svc__desc, .svc__tag, .svc__replaces s) {
+  color: rgba(13, 13, 12, 0.72);
+  border-color: rgba(13, 13, 12, 0.3);
+}
+
+.svc__arrow {
+  width: 48px;
+  height: 48px;
+  display: grid;
+  place-items: center;
+  border-radius: 50%;
+  border: 1px solid var(--color-border);
+  transition: transform 0.6s var(--ease-out-expo), background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+.svc:hover .svc__arrow {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--lime);
+  transform: rotate(45deg);
+}
+
+@media (max-width: 1024px) {
+  .services__header { grid-template-columns: minmax(0, 1fr); align-items: start; }
+  .svc { grid-template-columns: 44px minmax(0, 1fr) 48px; }
+  .svc__body { grid-column: 2 / 3; }
+  .svc__tag { display: none; }
+  .svc__arrow { grid-column: 3; grid-row: 1 / 3; }
+}
+
+@media (max-width: 640px) {
+  .svc { grid-template-columns: minmax(0, 1fr) 42px; }
+  .svc__num { display: none; }
+  .svc__body { grid-column: 1 / 2; }
+  .svc__arrow { grid-column: 2; width: 40px; height: 40px; }
+  .svc__icon { width: 40px; height: 40px; }
+}

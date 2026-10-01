@@ -1,0 +1,288 @@
+/* --- Process Section --- */
+.process {
+  background: var(--color-bg);
+  position: relative;
+  overflow: hidden;
+  padding: clamp(2.5rem, 4vw, 3.5rem) 0;
+}
+
+.process__grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--space-xl);
+  position: relative;
+}
+
+/* Step Card */
+.process__card {
+  padding: var(--space-xl);
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  cursor: pointer;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--glass-border);
+  background: rgba(255, 255, 255, 0.75);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
+  transition: border-color 0.35s ease, box-shadow 0.35s ease;
+  z-index: 1;
+}
+
+.process__card:hover,
+.process__card--active {
+  border-color: var(--step-glow, rgba(var(--accent-rgb), 0.35));
+  box-shadow: 0 20px 50px rgba(var(--shadow-rgb), 0.12), 0 8px 24px rgba(0, 0, 0, 0.05);
+}
+
+/* Custom Background Gradient Shade */
+.process__card-bg-gradient {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.9;
+  transition: opacity var(--transition-base);
+}
+
+.process__card:hover .process__card-bg-gradient,
+.process__card--active .process__card-bg-gradient {
+  opacity: 1;
+}
+
+/* Watermark Illustration */
+.process__card-watermark {
+  position: absolute;
+  bottom: -20px;
+  right: -20px;
+  opacity: 0.04;
+  pointer-events: none;
+  z-index: 0;
+  transform: rotate(-10deg);
+  transition: transform 0.4s ease, opacity 0.4s ease;
+}
+
+.process__card:hover .process__card-watermark,
+.process__card--active .process__card-watermark {
+  opacity: 0.08;
+  transform: rotate(0deg) scale(1.1);
+}
+
+/* Watermark Number */
+.process__watermark {
+  position: absolute;
+  top: 10px;
+  right: 18px;
+  font-size: 4.5rem;
+  font-weight: 900;
+  color: var(--color-text);
+  opacity: 0.04;
+  line-height: 1;
+  pointer-events: none;
+  user-select: none;
+  font-family: inherit;
+  transition: opacity var(--transition-base), transform var(--transition-base);
+  z-index: 0;
+}
+
+.process__card:hover .process__watermark,
+.process__card--active .process__watermark {
+  opacity: 0.08;
+  transform: scale(1.08);
+}
+
+/* Card Top */
+.process__card-top {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  margin-bottom: var(--space-md);
+  gap: 12px;
+  position: relative;
+  z-index: 1;
+}
+
+.process__icon-badge {
+  width: 48px;
+  height: 48px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+  transition: transform var(--transition-base);
+}
+
+.process__card:hover .process__icon-badge,
+.process__card--active .process__icon-badge {
+  transform: scale(1.1) rotate(5deg);
+}
+
+.process__meta-badges {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 6px;
+}
+
+.process__phase-tag {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  padding: 3px 10px;
+  border-radius: var(--radius-full);
+}
+
+.process__duration-badge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+}
+
+/* Content */
+.process__card-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--color-text);
+  margin-bottom: var(--space-xs);
+  text-align: left;
+  position: relative;
+  z-index: 1;
+}
+
+.process__card-desc {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  line-height: 1.6;
+  text-align: left;
+  margin-bottom: var(--space-lg);
+  flex-grow: 1;
+  position: relative;
+  z-index: 1;
+}
+
+/* Deliverables */
+.process__deliverables {
+  background: rgba(0, 0, 0, 0.02);
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-radius: var(--radius-sm);
+  padding: var(--space-md);
+  margin-bottom: var(--space-md);
+  text-align: left;
+  position: relative;
+  z-index: 1;
+  transition: background 0.3s ease, border-color 0.3s ease;
+}
+
+.process__card:hover .process__deliverables,
+.process__card--active .process__deliverables {
+  background: rgba(255, 255, 255, 0.6);
+  border-color: rgba(0, 0, 0, 0.08);
+}
+
+.process__deliverables-label {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--color-text-secondary);
+  margin-bottom: 6px;
+}
+
+.process__deliverables-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.process__deliverable-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.process__deliverable-icon {
+  flex-shrink: 0;
+}
+
+/* Card Bottom Progress Bar */
+.process__card-progress {
+  width: 100%;
+  height: 4px;
+  background: rgba(0, 0, 0, 0.06);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  position: relative;
+  z-index: 1;
+}
+
+.process__card-progress-fill {
+  height: 100%;
+  border-radius: var(--radius-full);
+  transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Dark Theme Overrides */
+[data-theme="dark"] .process__card {
+  background: rgba(var(--ink-rgb), 0.65);
+  border-color: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="dark"] .process__card:hover,
+[data-theme="dark"] .process__card--active {
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.5);
+}
+
+[data-theme="dark"] .process__deliverables {
+  background: rgba(var(--ink-rgb), 0.5);
+  border-color: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="dark"] .process__card:hover .process__deliverables,
+[data-theme="dark"] .process__card--active .process__deliverables {
+  background: rgba(var(--ink-rgb), 0.85);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="dark"] .process__card-progress {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="dark"] .process__card-watermark {
+  opacity: 0.03;
+  color: white;
+}
+
+[data-theme="dark"] .process__watermark {
+  color: white;
+  opacity: 0.03;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .process__grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .process__grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* The big step number competed with the phase tags */
+.process__watermark {
+  display: none;
+}
