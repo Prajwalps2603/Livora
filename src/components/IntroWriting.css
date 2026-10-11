@@ -1,0 +1,36 @@
+/* Opening screen: the logo is handwritten, then the curtain lifts */
+.intro-writing {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--z-cursor) + 10);
+  display: grid;
+  place-items: center;
+  background: var(--paper);
+  cursor: pointer;
+}
+
+.intro-writing__logo {
+  width: min(680px, 84vw);
+  height: auto;
+  overflow: visible;
+}
+
+[data-theme="dark"] .intro-writing {
+  background: var(--ink);
+}
+
+[data-theme="dark"] .intro-writing__logo {
+  filter: invert(1);
+}
+
+.intro-writing__hint {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}

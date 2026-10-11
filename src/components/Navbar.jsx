@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence, useScroll, useSpring } from 'framer-motion'
 import { Menu, X, ArrowRight, ArrowUpRight, Sun, Moon, ChevronDown, Sparkles, Compass, Users2, Layers, Cpu, Flame, Phone, Code2, Briefcase, Zap, CheckCircle2, ShieldCheck, Target } from 'lucide-react'
 import './Navbar.css'
+import wordmark from '../assets/livora-wordmark.png'
 
 const aboutUsItems = [
   {
@@ -228,15 +229,14 @@ export default function Navbar({ currentView, onNavigate }) {
                   handleItemClick('home')
                 }}
               >
-                <motion.span
-                  className="navbar__logo-mark"
-                  whileHover={{ rotate: 12, scale: 1.1 }}
+                <motion.img
+                  src={wordmark}
+                  alt="LIVORA"
+                  className="navbar__logo-img"
+                  whileHover={{ scale: 1.05 }}
                   transition={{ type: 'spring', stiffness: 400 }}
-                >
-                  L
-                </motion.span>
+                />
                 <div className="navbar__logo-text-group">
-                  <span className="navbar__logo-title">LIVORA</span>
                   <span className="navbar__logo-status" title="Studio Online">
                     <span className="navbar__status-pulse" />
                     <span className="navbar__status-text">Studio</span>

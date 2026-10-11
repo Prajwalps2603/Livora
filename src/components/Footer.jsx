@@ -3,6 +3,7 @@ import { ArrowUpRight, ArrowUp } from 'lucide-react'
 import { SiInstagram, SiGithub } from 'react-icons/si'
 import { FaLinkedinIn } from 'react-icons/fa'
 import './Footer.css'
+import logo from '../assets/livora-logo.png'
 
 const navLinks = [
   { label: 'Home', href: '#home' },
@@ -109,8 +110,7 @@ export default function Footer() {
         <div className="footer__top">
           <div className="footer__brand">
             <a href="#home" className="footer__logo" onClick={(e) => handleNavClick(e, '#home')}>
-              <span className="footer__logo-mark">L</span>
-              LIVORA
+              <img src={logo} alt="LIVORA — Building ideas into reality" className="footer__logo-img" />
             </a>
             <p className="footer__desc">
               Custom software and digital solutions built around your business.

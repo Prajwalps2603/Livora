@@ -1251,3 +1251,20 @@
 @media (max-width: 520px) {
   .navbar-wrapper { width: 100%; padding: 0 12px; }
 }
+
+/* Script wordmark: drawn in ink, flipped to paper on dark backgrounds */
+.navbar__logo-img {
+  display: block;
+  height: 40px;
+  width: auto;
+  transition: filter 0.35s ease;
+}
+
+[data-theme="dark"] .navbar__logo-img,
+.on-ink .navbar__logo-img {
+  filter: invert(1);
+}
+
+@media (max-width: 520px) {
+  .navbar__logo-img { height: 34px; }
+}

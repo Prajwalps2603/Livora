@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { AnimatePresence } from 'framer-motion'
-import PageSkeleton from './components/PageSkeleton'
+import IntroWriting from './components/IntroWriting'
 import Navbar from './components/Navbar'
 import Hero from './components/Hero'
 import TrustStrip from './components/TrustStrip'
@@ -54,13 +54,8 @@ export default function App() {
     return 'home'
   })
 
-  useEffect(() => {
-    // Initial sleek skeleton reveal
-    const timer = setTimeout(() => {
-      setLoading(false)
-    }, 750)
-    return () => clearTimeout(timer)
-  }, [])
+  // Opening handwritten-logo intro; it calls back when it is done (or skipped)
+  const finishIntro = useCallback(() => setLoading(false), [])
 
   // Listen to browser forward/back buttons
   useEffect(() => {
@@ -129,9 +124,9 @@ export default function App() {
     <>
       <CustomCursor />
       
-      {/* Theme-Aware Page Skeleton */}
+      {/* Handwritten logo intro */}
       <AnimatePresence>
-        {loading && <PageSkeleton />}
+        {loading && <IntroWriting onDone={finishIntro} />}
       </AnimatePresence>
 
       <Navbar
