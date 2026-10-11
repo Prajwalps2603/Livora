@@ -38,10 +38,10 @@ export default function PhilosophyView() {
       >
         <div className="philosophy-hero-glow" />
         <div className="section-badge">
-          <Layers size={14} /> Core Architectural Philosophy
+          <Layers size={14} /> What We Believe
         </div>
         <h2 className="philosophy-hero-title">
-          Technology Should <span className="text-gradient">Adapt To You.</span>
+          Your Workflow First. <span className="text-gradient">Software Second.</span>
         </h2>
         <p className="philosophy-hero-lead">
           We reject the premise that businesses must change their workflow to match off-the-shelf software. We understand the workflow first — then build custom software around it.

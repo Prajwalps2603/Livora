@@ -27,9 +27,9 @@ const serviceLinks = [
 ]
 
 const socials = [
-  { label: 'Instagram', icon: SiInstagram, href: '#' },
-  { label: 'LinkedIn', icon: FaLinkedinIn, href: '#' },
-  { label: 'GitHub', icon: SiGithub, href: '#' },
+  { label: 'Instagram', icon: SiInstagram, href: 'https://www.instagram.com/prajwal_nair03' },
+  { label: 'LinkedIn', icon: FaLinkedinIn, href: 'https://www.linkedin.com/in/prajwal-m-p-190131246' },
+  { label: 'GitHub', icon: SiGithub, href: 'https://github.com/Prajwalps2603' },
 ]
 
 const marquee = ['Web apps', 'Android apps', 'Business systems', 'Automation', 'Dashboards', 'Brand design']
@@ -41,7 +41,7 @@ const timeFormat = new Intl.DateTimeFormat('en-IN', {
   timeZone: 'Asia/Kolkata',
 })
 
-export default function Footer() {
+export default function Footer({ onNavigate }) {
   // Studio clock (Bangalore time)
   const [time, setTime] = useState(() => timeFormat.format(new Date()))
 
@@ -59,9 +59,14 @@ export default function Footer() {
       window.scrollTo({ top: y, behavior: 'smooth' })
     } else if (href === '#contact') {
       // Sub-pages have no contact section of their own
-      window.location.assign('/contact')
+      onNavigate('contact')
     } else {
-      window.location.assign('/')
+      // Go back to the home page, then scroll to the section once it has rendered
+      onNavigate('home')
+      setTimeout(() => {
+        const target = document.querySelector(href)
+        if (target) window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 80, behavior: 'smooth' })
+      }, 150)
     }
   }
 
@@ -127,7 +132,7 @@ export default function Footer() {
 
             <div className="footer__socials">
               {socials.map(({ label, icon: Icon, href }) => (
-                <a key={label} href={href} className="footer__social" aria-label={label}>
+                <a key={label} href={href} target="_blank" rel="noopener noreferrer" className="footer__social" aria-label={label}>
                   <Icon size={17} />
                 </a>
               ))}
@@ -167,7 +172,6 @@ export default function Footer() {
             <a href="tel:+918618176469" className="footer__link">+91 8618176469</a>
             <a href="tel:+917994162314" className="footer__link">+91 7994162314</a>
             <a href="mailto:prajwalnair2603@gmail.com" className="footer__link">prajwalnair2603@gmail.com</a>
-            <a href="mailto:nikhil@gmail.com" className="footer__link">nikhil@gmail.com</a>
           </div>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, lazy, Suspense } from 'react'
 import { AnimatePresence } from 'framer-motion'
 import IntroWriting from './components/IntroWriting'
 import Navbar from './components/Navbar'
@@ -9,8 +9,6 @@ import ConnectedSystems from './components/ConnectedSystems'
 import Automation from './components/Automation'
 import Industries from './components/Industries'
 import Services from './components/Services'
-import BusinessSolutions from './components/BusinessSolutions'
-import BeforeAfter from './components/BeforeAfter'
 import WhyLivora from './components/WhyLivora'
 import Process from './components/Process'
 import TryBeforeCommit from './components/TryBeforeCommit'
@@ -22,75 +20,53 @@ import Testimonials from './components/Testimonials'
 import FAQ from './components/FAQ'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
-import SubPageLayout from './components/SubPageLayout'
-import PurposeView from './components/PurposeView'
-import MotivationView from './components/MotivationView'
-import MissionVisionView from './components/MissionVisionView'
-import PhilosophyView from './components/PhilosophyView'
-import QualityView from './components/QualityView'
-import AboutPage from './components/AboutPage'
 import WhatsAppButton from './components/WhatsAppButton'
 import CustomCursor from './components/CustomCursor'
 
+// Inner pages load on demand, keeping the first visit light
+const SubPageLayout = lazy(() => import('./components/SubPageLayout'))
+const PurposeView = lazy(() => import('./components/PurposeView'))
+const MotivationView = lazy(() => import('./components/MotivationView'))
+const MissionVisionView = lazy(() => import('./components/MissionVisionView'))
+const PhilosophyView = lazy(() => import('./components/PhilosophyView'))
+const QualityView = lazy(() => import('./components/QualityView'))
+const AboutPage = lazy(() => import('./components/AboutPage'))
+const BusinessSolutions = lazy(() => import('./components/BusinessSolutions'))
+const BeforeAfter = lazy(() => import('./components/BeforeAfter'))
+
+// Site base path, e.g. '/Livora/' on GitHub Pages
+const BASE = import.meta.env.BASE_URL
+
+function viewFromPath(pathname) {
+  const path = pathname.startsWith(BASE) ? '/' + pathname.slice(BASE.length) : pathname
+  if (path.includes('/about-overview') || path.includes('/overview')) return 'about-overview'
+  if (path.includes('/purpose')) return 'purpose'
+  if (path.includes('/motivation') || path.includes('/motive')) return 'motivation'
+  if (path.includes('/mission-vision') || path.includes('/mission')) return 'mission-vision'
+  if (path.includes('/philosophy')) return 'philosophy'
+  if (path.includes('/quality')) return 'quality'
+  if (path.includes('/what-we-build')) return 'what-we-build'
+  if (path.includes('/team') || path.includes('/people')) return 'team'
+  if (path.includes('/contact')) return 'contact'
+  if (path.includes('/services')) return 'services'
+  if (path.includes('/solutions')) return 'solutions'
+  if (path.includes('/process')) return 'process'
+  if (path.includes('/work')) return 'work'
+  return 'home'
+}
+
 export default function App() {
   const [loading, setLoading] = useState(true)
-  const [currentView, setCurrentView] = useState(() => {
-    if (typeof window !== 'undefined') {
-      const path = window.location.pathname
-      if (path.includes('/about-overview') || path.includes('/overview')) return 'about-overview'
-      if (path.includes('/purpose')) return 'purpose'
-      if (path.includes('/motivation') || path.includes('/motive')) return 'motivation'
-      if (path.includes('/mission-vision') || path.includes('/mission')) return 'mission-vision'
-      if (path.includes('/philosophy')) return 'philosophy'
-      if (path.includes('/quality')) return 'quality'
-      if (path.includes('/what-we-build')) return 'what-we-build'
-      if (path.includes('/team') || path.includes('/people')) return 'team'
-      if (path.includes('/contact')) return 'contact'
-      if (path.includes('/services')) return 'services'
-      if (path.includes('/solutions')) return 'solutions'
-      if (path.includes('/process')) return 'process'
-      if (path.includes('/work')) return 'work'
-    }
-    return 'home'
-  })
+  const [currentView, setCurrentView] = useState(() =>
+    typeof window !== 'undefined' ? viewFromPath(window.location.pathname) : 'home'
+  )
 
   // Opening handwritten-logo intro; it calls back when it is done (or skipped)
   const finishIntro = useCallback(() => setLoading(false), [])
 
   // Listen to browser forward/back buttons
   useEffect(() => {
-    const handlePopState = () => {
-      const path = window.location.pathname
-      if (path === '/' || path === '') {
-        setCurrentView('home')
-      } else if (path.includes('/about-overview') || path.includes('/overview')) {
-        setCurrentView('about-overview')
-      } else if (path.includes('/purpose')) {
-        setCurrentView('purpose')
-      } else if (path.includes('/motivation') || path.includes('/motive')) {
-        setCurrentView('motivation')
-      } else if (path.includes('/mission-vision') || path.includes('/mission')) {
-        setCurrentView('mission-vision')
-      } else if (path.includes('/philosophy')) {
-        setCurrentView('philosophy')
-      } else if (path.includes('/quality')) {
-        setCurrentView('quality')
-      } else if (path.includes('/what-we-build')) {
-        setCurrentView('what-we-build')
-      } else if (path.includes('/team') || path.includes('/people')) {
-        setCurrentView('team')
-      } else if (path.includes('/contact')) {
-        setCurrentView('contact')
-      } else if (path.includes('/services')) {
-        setCurrentView('services')
-      } else if (path.includes('/solutions')) {
-        setCurrentView('solutions')
-      } else if (path.includes('/process')) {
-        setCurrentView('process')
-      } else if (path.includes('/work')) {
-        setCurrentView('work')
-      }
-    }
+    const handlePopState = () => setCurrentView(viewFromPath(window.location.pathname))
     window.addEventListener('popstate', handlePopState)
     return () => window.removeEventListener('popstate', handlePopState)
   }, [])
@@ -116,7 +92,8 @@ export default function App() {
       'work': '/explorer/work',
     }
     const path = urlMap[viewKey] || `/${viewKey}`
-    window.history.pushState({}, '', path)
+    // Keep the site's base path (/Livora/ on GitHub Pages) in every URL
+    window.history.pushState({}, '', BASE + path.replace(/^\//, ''))
     window.scrollTo({ top: 0, behavior: 'smooth' })
   }
 
@@ -134,6 +111,7 @@ export default function App() {
         onNavigate={handleNavigate}
       />
 
+      <Suspense fallback={null}>
       {/* --- Multi-Page View Routing --- */}
       {currentView === 'home' && (
         <main>
@@ -291,7 +269,7 @@ export default function App() {
           onNavigateHome={() => handleNavigate('home')}
           onNavigateContact={() => handleNavigate('contact')}
         >
-          <Contact />
+          <Contact showHeader={false} />
           <FAQ />
         </SubPageLayout>
       )}
@@ -361,8 +339,9 @@ export default function App() {
           <Testimonials />
         </SubPageLayout>
       )}
+      </Suspense>
 
-      <Footer />
+      <Footer onNavigate={handleNavigate} />
       <WhatsAppButton />
     </>
   )

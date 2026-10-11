@@ -180,9 +180,17 @@
   transition: border-color 0.35s ease, box-shadow 0.35s ease;
 }
 
-.contact__form:hover {
-  border-color: rgba(var(--accent-rgb), 0.25);
-  box-shadow: 0 24px 60px rgba(var(--shadow-rgb), 0.08);
+/* The form stays still under the pointer: same look as at rest */
+.contact__form.glass-card:hover {
+  transform: none;
+  border-color: var(--glass-border);
+  box-shadow: 0 16px 48px rgba(0, 0, 0, 0.04);
+}
+
+[data-theme="dark"] .contact__form.glass-card:hover {
+  transform: none;
+  border-color: rgba(255, 255, 255, 0.06);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
 }
 
 .contact__form-bg-gradient {
@@ -311,10 +319,20 @@ option {
   color: rgba(255, 255, 255, 0.35);
 }
 
+.contact__submit-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-sm);
+  margin-top: var(--space-sm);
+}
+
 .contact__submit {
   width: 100%;
   justify-content: center;
-  margin-top: var(--space-sm);
+}
+
+@media (max-width: 520px) {
+  .contact__submit-row { grid-template-columns: 1fr; }
 }
 
 /* Info Sidebar & "Available for Projects" Container */

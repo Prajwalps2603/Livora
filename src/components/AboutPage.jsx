@@ -830,9 +830,6 @@ export default function AboutPage({ onNavigateHome, onNavigateContact, onNavigat
                 <a href="tel:+917994162314" className="about-team__link">
                   <Phone size={14} /> +91 7994162314
                 </a>
-                <a href="mailto:nikhil@gmail.com" className="about-team__link">
-                  <Mail size={14} /> nikhil@gmail.com
-                </a>
                 <a
                   href="https://wa.me/917994162314"
                   target="_blank"

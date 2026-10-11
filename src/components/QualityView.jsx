@@ -68,7 +68,7 @@ export default function QualityView() {
           <ShieldCheck size={14} /> Engineering Standards
         </div>
         <h2 className="quality-hero-title">
-          Our Commitment to <span className="text-gradient">Uncompromising Quality.</span>
+          Built to Last, <span className="text-gradient">Not Just to Launch.</span>
         </h2>
         <p className="quality-hero-lead">
           We don't build quick, brittle disposable software. We craft resilient, high-speed digital systems engineered for long-term operational success.

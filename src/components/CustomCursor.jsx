@@ -32,6 +32,16 @@ export default function CustomCursor() {
     frame = requestAnimationFrame(tick)
 
     const handleMouseMove = (e) => {
+      // Plain zones (e.g. the contact form) keep the normal system cursor only
+      if (e.target.closest?.('[data-plain-cursor]')) {
+        setVisible(false)
+        if (magnet) {
+          magnet.style.removeProperty('--mag-x')
+          magnet.style.removeProperty('--mag-y')
+          magnet = null
+        }
+        return
+      }
       setVisible(true)
       target.x = e.clientX
       target.y = e.clientY

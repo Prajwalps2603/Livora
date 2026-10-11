@@ -58,7 +58,7 @@ const quickActions = [
   },
 ]
 
-export default function Contact() {
+export default function Contact({ showHeader = true }) {
   const [ref, inView] = useInView()
   const [form, setForm] = useState({
     name: '', business: '', email: '', phone: '', service: '', message: '',
@@ -68,9 +68,17 @@ export default function Contact() {
     setForm({ ...form, [e.target.name]: e.target.value })
   }
 
+  // The form sends through WhatsApp or the visitor's email app, whichever button they press
   const handleSubmit = (e) => {
     e.preventDefault()
-    const whatsappMsg = `Hi LIVORA! I'd like to discuss a project.\n\nName: ${form.name}\nBusiness: ${form.business}\nEmail: ${form.email}\nPhone: ${form.phone}\nService: ${form.service}\nMessage: ${form.message}`
+    const details = `Name: ${form.name}\nBusiness: ${form.business}\nEmail: ${form.email}\nPhone: ${form.phone}\nService: ${form.service}\nMessage: ${form.message}`
+    if (e.nativeEvent.submitter?.value === 'email') {
+      const subject = `Project enquiry from ${form.name}${form.business ? ` (${form.business})` : ''}`
+      const body = `Hi LIVORA,\n\nI'd like to discuss a project.\n\n${details}`
+      window.location.href = `mailto:prajwalnair2603@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`
+      return
+    }
+    const whatsappMsg = `Hi LIVORA! I'd like to discuss a project.\n\n${details}`
     window.open(`https://wa.me/918618176469?text=${encodeURIComponent(whatsappMsg)}`, '_blank')
   }
 
@@ -83,23 +91,26 @@ export default function Contact() {
       </div>
 
       <div className="container">
-        <motion.div
-          className="section-header"
-          variants={staggerContainer}
-          initial="hidden"
-          animate={inView ? 'visible' : 'hidden'}
-        >
-          <motion.div className="section-badge" variants={fadeInUp} transition={{ duration: 0.5 }}>
-            <Sparkles size={14} /> Get In Touch
+        {/* The Contact page already shows this heading in its page header */}
+        {showHeader && (
+          <motion.div
+            className="section-header"
+            variants={staggerContainer}
+            initial="hidden"
+            animate={inView ? 'visible' : 'hidden'}
+          >
+            <motion.div className="section-badge" variants={fadeInUp} transition={{ duration: 0.5 }}>
+              <Sparkles size={14} /> Get In Touch
+            </motion.div>
+            <motion.h2 className="section-title contact__title" variants={fadeInUp} transition={{ duration: 0.5 }}>
+              Let's Build Something<br />
+              <span className="contact__title-accent">Extraordinary.</span>
+            </motion.h2>
+            <motion.p className="section-subtitle" variants={fadeInUp} transition={{ duration: 0.5 }}>
+              Have an idea, an operational bottleneck, or a project to launch? Connect directly with the developers.
+            </motion.p>
           </motion.div>
-          <motion.h2 className="section-title contact__title" variants={fadeInUp} transition={{ duration: 0.5 }}>
-            Let's Build Something<br />
-            <span className="contact__title-accent">Extraordinary.</span>
-          </motion.h2>
-          <motion.p className="section-subtitle" variants={fadeInUp} transition={{ duration: 0.5 }}>
-            Have an idea, an operational bottleneck, or a project to launch? Connect directly with the developers.
-          </motion.p>
-        </motion.div>
+        )}
 
         {/* Quick action cards */}
         <motion.div
@@ -149,11 +160,11 @@ export default function Contact() {
           transition={{ duration: 0.6, delay: 0.3 }}
         >
           {/* Contact Form with Framer Motion whileHover */}
+          {/* data-plain-cursor: no custom cursor or hover motion while filling in the form */}
           <motion.form
             className="contact__form glass-card"
             onSubmit={handleSubmit}
-            whileHover={{ y: -6, scale: 1.01 }}
-            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+            data-plain-cursor
           >
             <div className="contact__form-bg-gradient" />
             <div className="contact__form-header">
@@ -206,9 +217,14 @@ export default function Contact() {
               <textarea id="message" name="message" className="contact__input contact__textarea" placeholder="Tell us about your project or idea..." rows={4} value={form.message} onChange={handleChange} required />
             </div>
 
-            <button type="submit" className="btn btn-primary btn-lg contact__submit">
-              Send Enquiry <ArrowRight size={18} className="btn-arrow" />
-            </button>
+            <div className="contact__submit-row">
+              <button type="submit" value="whatsapp" className="btn btn-primary btn-lg contact__submit">
+                Send on WhatsApp <ArrowRight size={18} className="btn-arrow" />
+              </button>
+              <button type="submit" value="email" className="btn btn-secondary btn-lg contact__submit">
+                Send by Email <Mail size={18} />
+              </button>
+            </div>
           </motion.form>
 
           {/* Right Column: Creative "Available for Projects" Container with Framer Motion whileHover */}
@@ -284,9 +300,6 @@ export default function Contact() {
                 <div className="contact__email-links">
                   <a href="mailto:prajwalnair2603@gmail.com" className="contact__email-pill">
                     prajwalnair2603@gmail.com
-                  </a>
-                  <a href="mailto:nikhil@gmail.com" className="contact__email-pill">
-                    nikhil@gmail.com
                   </a>
                 </div>
               </div>

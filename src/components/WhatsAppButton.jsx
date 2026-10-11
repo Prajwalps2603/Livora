@@ -57,7 +57,13 @@ export default function WhatsAppButton() {
             transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
           >
             <div className="chat__head">
-              <span className="chat__avatar">L</span>
+              <span className="chat__avatar" aria-hidden="true">
+                {/* Paper-plane arrow from the LIVORA logo */}
+                <svg width="24" height="24" viewBox="4 5 24 23">
+                  <path d="M6 15.5 26.5 6.5 19.5 25.5 16.4 18.6Z" fill="currentColor" />
+                  <path d="M5 26.5c4.2-.4 8-2 10.6-5.6" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" />
+                </svg>
+              </span>
               <div className="chat__who">
                 <strong>LIVORA</strong>
                 <span><i /> Replies within 24 hours</span>
@@ -143,7 +149,7 @@ export default function WhatsAppButton() {
               exit={{ rotate: 90, scale: 0.4, opacity: 0 }}
               transition={{ duration: 0.25 }}
             >
-              {open ? <X size={22} /> : <SiWhatsapp size={24} />}
+              {open ? <X size={16} /> : <SiWhatsapp size={18} />}
             </motion.span>
           </AnimatePresence>
         </span>
