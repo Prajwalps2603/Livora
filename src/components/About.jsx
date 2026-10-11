@@ -126,9 +126,9 @@ export default function About() {
                   muted
                   playsInline
                   preload="metadata"
-                  poster="/media/studio-reel-poster.jpg"
+                  poster={`${import.meta.env.BASE_URL}media/studio-reel-poster.jpg`}
                 >
-                  <source src="/media/studio-reel.mp4" type="video/mp4" />
+                  <source src={`${import.meta.env.BASE_URL}media/studio-reel.mp4`} type="video/mp4" />
                   Your browser does not support the video tag.
                 </video>
 
