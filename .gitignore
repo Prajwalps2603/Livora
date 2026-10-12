@@ -23,5 +23,6 @@ dist-ssr
 *.sln
 *.sw?
 
-# Large reference media
+# Large reference media (the site's own videos in public/media are kept)
 *.mp4
+!public/media/*.mp4
