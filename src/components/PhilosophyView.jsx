@@ -1,6 +1,6 @@
 import React from 'react'
 import { motion } from 'framer-motion'
-import { Layers, CheckCircle2, XCircle, ArrowRight, UserCheck, Cpu, Sparkles } from 'lucide-react'
+import { Layers, CheckCircle2, XCircle, UserCheck, Cpu, Sparkles } from 'lucide-react'
 import { fadeInUp, fadeInLeft, fadeInRight, staggerContainer } from '../hooks/useAnimations'
 import './PhilosophyView.css'
 

@@ -1,171 +1,756 @@
+/* --- Technology: a 3D "stack-board" keyboard --- */
 .technology {
   position: relative;
   overflow: hidden;
 }
 
-/* --- Category filter --- */
-.tech__filters {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 8px;
-  margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
-}
-
-.tech__filter {
+.tech__stage {
   position: relative;
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 9px 16px;
-  border-radius: 999px;
-  border: 1px solid var(--color-border);
-  font-size: 0.86rem;
-  font-weight: 500;
-  color: var(--color-text-secondary);
-  isolation: isolate;
-  transition: color 0.3s ease, border-color 0.3s ease;
+  max-width: 1060px;
+  margin: 0 auto;
 }
 
-.tech__filter:hover {
-  color: var(--color-text);
-  border-color: var(--color-text);
+.tech__kb-wrap {
+  perspective: 1900px;
 }
 
-.tech__filter small {
-  font-family: var(--font-mono);
-  font-size: 0.62rem;
-  opacity: 0.7;
+/* Animatable values for the light strip and the backlight glow */
+@property --strip {
+  syntax: '<angle>';
+  inherits: false;
+  initial-value: 0deg;
 }
 
-.tech__filter.is-active {
-  color: var(--surface-page);
-  border-color: var(--color-text);
+@property --glow {
+  syntax: '<number>';
+  inherits: false;
+  initial-value: 0;
 }
 
-.tech__filter-bg {
+/* Keyboard case: anodised ink with a running lime light strip */
+.tech__kb {
+  position: relative;
+  padding: 16px 18px 20px;
+  border-radius: 30px;
+  background:
+    radial-gradient(120% 80% at 50% -10%, rgba(255, 255, 255, 0.07), transparent 60%),
+    linear-gradient(180deg, #2B2B28, #141413);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.1),
+    inset 0 -2px 0 rgba(0, 0, 0, 0.5),
+    0 14px 0 #070706,
+    0 40px 90px -20px rgba(var(--lime-rgb), 0.28),
+    0 60px 90px -40px rgba(13, 13, 12, 0.8);
+  /* One flat tilted surface: nested 3D layers made real clicks miss the keys */
+  transform-style: flat;
+  transform-origin: 50% 60%;
+}
+
+.tech__kb::before {
+  content: '';
   position: absolute;
-  inset: -1px;
-  z-index: -1;
-  border-radius: inherit;
-  background: var(--color-text);
+  inset: -1.5px;
+  padding: 1.5px;
+  border-radius: 31px;
+  background: conic-gradient(from var(--strip), transparent 0deg 250deg, rgba(var(--lime-rgb), 0.9) 320deg, transparent 360deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  animation: stripRun 5s linear infinite;
+  pointer-events: none;
 }
 
-/* --- Grid: five across --- */
-.tech__grid {
+@keyframes stripRun {
+  to { --strip: 360deg; }
+}
+
+/* Corner screws */
+.tech__screw {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #6A6A64, #2A2A27 70%);
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.6);
+}
+
+.tech__screw::after {
+  content: '';
+  position: absolute;
+  left: 2px;
+  right: 2px;
+  top: 4px;
+  height: 1px;
+  background: #121211;
+  transform: rotate(35deg);
+}
+
+.tech__screw--tl { top: 10px; left: 10px; }
+.tech__screw--tr { top: 10px; right: 10px; }
+.tech__screw--bl { bottom: 10px; left: 10px; }
+.tech__screw--br { bottom: 10px; right: 10px; }
+
+/* Top bar: OLED, engraved brand, LEDs and knob */
+.tech__kb-top {
   display: grid;
-  grid-template-columns: repeat(5, minmax(0, 1fr));
-  gap: 12px;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 16px;
+  padding: 4px 8px 14px;
 }
 
-.tech__card {
-  --tech-color: var(--ink);
-  --tech-on: #fff;
+.tech__oled {
+  position: relative;
+  justify-self: start;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 210px;
+  padding: 8px 12px;
+  border-radius: 8px;
+  background: #050505;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.05), inset 0 2px 8px rgba(0, 0, 0, 0.9);
+  font-family: var(--font-mono);
+  color: var(--lime);
+  text-shadow: 0 0 6px rgba(var(--lime-rgb), 0.7);
+}
+
+.tech__oled-line {
+  font-size: 0.78rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  white-space: nowrap;
+  clip-path: inset(0 100% 0 0);
+  animation: oledType 0.5s steps(16, end) forwards;
+}
+
+@keyframes oledType {
+  to { clip-path: inset(0 0 0 0); }
+}
+
+.tech__oled small {
+  font-size: 0.56rem;
+  letter-spacing: 0.12em;
+  color: rgba(var(--lime-rgb), 0.55);
+  text-shadow: none;
+}
+
+.tech__oled-cursor {
+  display: inline-block;
+  width: 7px;
+  height: 12px;
+  margin-left: 4px;
+  vertical-align: -1px;
+  background: var(--lime);
+  animation: blinkCur 1s steps(1) infinite;
+}
+
+@keyframes blinkCur {
+  50% { opacity: 0; }
+}
+
+.tech__kb-brand {
+  font-family: var(--font-display);
+  font-weight: 800;
+  font-size: 1.05rem;
+  letter-spacing: 0.32em;
+  color: #45453F;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.1), 0 -1px 0 rgba(0, 0, 0, 0.8);
+}
+
+.tech__kb-brand small {
+  display: block;
+  margin-top: 2px;
+  font-family: var(--font-mono);
+  font-size: 0.56rem;
+  font-weight: 500;
+  letter-spacing: 0.3em;
+  text-align: center;
+  color: #5A5A54;
+  text-shadow: none;
+}
+
+.tech__kb-right {
+  justify-self: end;
   display: flex;
   align-items: center;
-  gap: 13px;
-  min-width: 0;
-  padding: 12px 14px 12px 12px;
-  border-radius: 18px;
+  gap: 16px;
+}
+
+.tech__kb-leds {
+  display: flex;
+  gap: 8px;
+}
+
+.tech__kb-leds i {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #2C2C29;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tech__kb-leds i.is-on {
+  background: var(--lime);
+  box-shadow: 0 0 10px rgba(var(--lime-rgb), 0.9);
+}
+
+/* Brushed-metal rotary knob, turns with the selection */
+.tech__knob {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background:
+    repeating-conic-gradient(from 0deg, #9A9A92 0deg 6deg, #C9C9C1 6deg 12deg);
+  box-shadow: inset 0 0 0 3px #3A3A36, 0 4px 0 #070706, 0 6px 14px rgba(0, 0, 0, 0.7);
+  transform: rotate(var(--turn));
+  transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.tech__knob i {
+  position: absolute;
+  left: 50%;
+  top: 6px;
+  width: 4px;
+  height: 9px;
+  margin-left: -2px;
+  border-radius: 2px;
+  background: var(--lime);
+  box-shadow: 0 0 6px rgba(var(--lime-rgb), 0.9);
+}
+
+/* Recessed plate the keys sit in */
+.tech__plate {
+  position: relative;
+  padding: 14px;
+  border-radius: 20px;
+  background: #0B0B0A;
+  box-shadow: inset 0 3px 10px rgba(0, 0, 0, 0.9), inset 0 0 0 1px rgba(255, 255, 255, 0.04);
+}
+
+/* Function row = category filters */
+.tech__fn-row {
+  display: grid;
+  grid-template-columns: repeat(9, 1fr);
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.tech__fn {
+  padding: 9px 4px 11px;
+  border-radius: 9px;
+  background: linear-gradient(180deg, #3A3A36, #2C2C29);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 4px 0 #161615;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #C9C9C1;
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease, background 0.25s ease, color 0.25s ease;
+}
+
+.tech__fn:hover { color: var(--paper); }
+
+.tech__fn:active,
+.tech__fn.is-active {
+  transform: translateY(3px);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 1px 0 #161615;
+}
+
+.tech__fn.is-active {
+  background: linear-gradient(180deg, #D7FA5E, var(--lime));
+  box-shadow: 0 1px 0 #7E9C1C, 0 0 18px rgba(var(--lime-rgb), 0.45);
+  color: var(--ink);
+}
+
+/* Tech keys: 10 x 5 */
+.tech__keys {
+  display: grid;
+  grid-template-columns: repeat(10, 1fr);
+  gap: 9px;
+}
+
+/* Keycap colourways */
+.cap-paper { --cap-a: #FBFBF8; --cap-b: #DCDCD4; --cap-side: #9E9E96; --legend: #4A4A45; }
+.cap-stone { --cap-a: #D9D9D1; --cap-b: #BCBCB3; --cap-side: #7E7E76; --legend: #33332F; }
+.cap-ink   { --cap-a: #3A3A36; --cap-b: #24241F; --cap-side: #0A0A09; --legend: #B9B9B1; }
+.cap-lime  { --cap-a: #E2FC7E; --cap-b: #B9E330; --cap-side: #6F8A17; --legend: #2A3606; }
+
+.tech__key {
+  position: relative;
+  display: block;
+  padding: 0;
+  aspect-ratio: 1;
+  border-radius: 13px;
+  background: linear-gradient(180deg, var(--cap-a, #FBFBF8), var(--cap-b, #DCDCD4));
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    0 6px 0 var(--cap-side, #9E9E96),
+    0 10px 14px -6px rgba(0, 0, 0, 0.7),
+    0 6px 26px 2px rgba(var(--lime-rgb), calc(var(--glow) * 0.9));
+  cursor: pointer;
+  transition: transform 0.14s ease, box-shadow 0.14s ease, opacity 0.3s ease, filter 0.3s ease, --glow 0.35s ease;
+}
+
+/* The concave dish on top of each cap */
+.tech__key-cap {
+  position: absolute;
+  inset: 5px 5px 7px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  border-radius: 9px;
+  background: linear-gradient(180deg, var(--cap-b, #DCDCD4), var(--cap-a, #FBFBF8));
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.12);
+}
+
+.tech__key-icon {
+  width: 34%;
+  height: 34%;
+  color: var(--brand);
+  transition: transform 0.3s var(--ease-out-expo);
+}
+
+.tech__key-label {
+  max-width: 92%;
+  overflow: hidden;
+  font-family: var(--font-mono);
+  font-size: 0.55rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  color: var(--legend, #4A4A45);
+}
+
+.tech__key:hover {
+  --glow: 0.45;
+  transform: translateY(-2px);
+}
+
+.tech__key:hover .tech__key-icon { transform: scale(1.15) rotate(-6deg); }
+
+.tech__key.is-pressed,
+.tech__key:active {
+  transform: translateY(5px);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.55),
+    0 1px 0 var(--cap-side, #9E9E96),
+    0 3px 6px -2px rgba(0, 0, 0, 0.6),
+    0 4px 22px 2px rgba(var(--lime-rgb), calc(var(--glow) * 0.9));
+}
+
+/* Selected key: lit from below with a lime ring */
+.tech__key.is-selected {
+  --glow: 1;
+  outline: 2px solid var(--lime);
+  outline-offset: 3px;
+}
+
+.tech__key.is-ghost { --glow: 0.8; }
+
+/* Backlight ripple: each key lights up after a delay set by its distance from the press */
+.tech__key.wave-a { animation: keyWaveA 0.9s ease-out var(--wd) both; }
+.tech__key.wave-b { animation: keyWaveB 0.9s ease-out var(--wd) both; }
+
+@keyframes keyWaveA {
+  0% { --glow: 0; }
+  30% { --glow: 0.85; }
+  100% { --glow: 0; }
+}
+
+@keyframes keyWaveB {
+  0% { --glow: 0; }
+  30% { --glow: 0.85; }
+  100% { --glow: 0; }
+}
+
+.tech__key.is-selected.wave-a,
+.tech__key.is-selected.wave-b,
+.tech__key.is-ghost.wave-a,
+.tech__key.is-ghost.wave-b,
+.tech__key:hover {
+  animation: none;
+}
+
+.tech__key.is-dim {
+  opacity: 0.18;
+  filter: grayscale(1);
+  pointer-events: none;
+}
+
+/* Bottom row: esc, space bar, enter */
+.tech__bottom-row {
+  display: grid;
+  grid-template-columns: 1fr 6fr 2fr;
+  gap: 9px;
+  margin-top: 12px;
+}
+
+.tech__key--mod,
+.tech__key--space,
+.tech__key--enter {
+  aspect-ratio: auto;
+  height: 50px;
+}
+
+.tech__key--mod { --cap-a: #3A3A36; --cap-b: #24241F; --cap-side: #0A0A09; --legend: #B9B9B1; }
+.tech__key--mod .tech__key-label { font-size: 0.7rem; }
+
+.tech__key--space {
   cursor: default;
 }
 
-/* Real brand mark on a white tile; the tile floods with the brand colour on hover */
-.tech__icon-box {
-  position: relative;
-  flex-shrink: 0;
-  width: 50px;
-  height: 50px;
+.tech__key--space .tech__key-cap {
+  flex-direction: row;
+  gap: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #6F6F68;
+}
+
+.tech__key--space:hover { transform: none; --glow: 0; }
+
+.tech__space-led {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--lime);
+  box-shadow: 0 0 10px rgba(var(--lime-rgb), 0.9);
+  animation: ledPulse 1.6s ease-in-out infinite;
+}
+
+@keyframes ledPulse {
+  50% { opacity: 0.35; }
+}
+
+.tech__key--enter {
+  --cap-a: #E2FC7E;
+  --cap-b: #B9E330;
+  --cap-side: #6F8A17;
+  text-decoration: none;
+}
+
+.tech__key--enter .tech__key-cap {
+  flex-direction: row;
+  gap: 8px;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tech__kb::before,
+  .tech__key.wave-a,
+  .tech__key.wave-b { animation: none; }
+}
+
+/* --- Detail panel --- */
+.tech__panel {
+  position: absolute;
+  z-index: 3;
+  top: 50%;
+  right: 0;
+  width: min(430px, 44%);
+  padding: 28px;
+  border-radius: 26px;
+  background: var(--surface-card);
+  box-shadow: inset 0 0 0 1px var(--card-border), var(--shadow-window);
+}
+
+.tech__panel-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
   display: grid;
   place-items: center;
-  border-radius: 14px;
-  background: #fff;
-  color: var(--tech-color);
-  box-shadow: inset 0 0 0 1px rgba(13, 13, 12, 0.1);
-  overflow: hidden;
-  isolation: isolate;
-  transition: color 0.35s ease, transform 0.6s var(--ease-out-expo);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--tint);
+  color: var(--color-text);
+  cursor: pointer;
+  transition: transform 0.3s var(--ease-out-expo);
 }
 
-.tech__icon-box::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-  background: var(--tech-color);
-  clip-path: circle(0% at 50% 100%);
-  transition: clip-path 0.6s var(--ease-out-expo);
-}
+.tech__panel-close:hover { transform: rotate(90deg); }
 
-.tech__icon-box svg {
-  transition: transform 0.6s var(--ease-out-expo);
-}
-
-.tech__card:hover .tech__icon-box {
-  color: var(--tech-on);
-  transform: rotate(-6deg) scale(1.06);
-}
-
-.tech__card:hover .tech__icon-box::before {
-  clip-path: circle(150% at 50% 100%);
-}
-
-.tech__card:hover .tech__icon-box svg {
-  transform: scale(1.12);
-}
-
-.tech__info {
+.tech__panel-head {
   display: flex;
-  flex-direction: column;
-  gap: 3px;
-  min-width: 0;
-  text-align: left;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 14px;
 }
 
-.tech__name {
+.tech__panel-icon {
+  display: grid;
+  place-items: center;
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+  border-radius: 18px;
+  background: #FBFBF8;
+  box-shadow: inset 0 0 0 1px var(--card-border), 0 10px 22px -12px rgba(var(--shadow-rgb), 0.6);
+  color: var(--brand);
+  font-size: 32px;
+}
+
+.tech__panel-cat {
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.tech__panel-title {
   font-family: var(--font-display);
-  font-size: 0.98rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
+  font-size: 1.9rem;
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
   color: var(--color-text);
 }
 
-.tech__category {
-  font-family: var(--font-mono);
-  font-size: 0.56rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
+.tech__panel-use {
+  margin-bottom: 20px;
+  font-size: 0.98rem;
+  line-height: 1.6;
   color: var(--color-text-secondary);
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
+.tech__panel-label {
+  display: block;
+  margin-bottom: 10px;
+  font-family: var(--font-mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+}
+
+.tech__panel-builds {
+  display: grid;
+  gap: 8px;
+  margin: 0 0 20px;
+  padding: 0;
+  list-style: none;
+}
+
+.tech__panel-builds li {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: var(--tint);
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.tech__panel-builds svg {
+  flex-shrink: 0;
+  padding: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--lime);
+  color: var(--ink);
+}
+
+.tech__panel-pairs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 22px;
+}
+
+.tech__panel-pairs button {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 12px;
+  border-radius: var(--radius-full);
+  background: var(--surface-page);
+  box-shadow: inset 0 0 0 1px var(--card-border), 0 3px 0 var(--card-border);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--color-text);
+  cursor: pointer;
+  transition: transform 0.12s ease, box-shadow 0.12s ease;
+}
+
+.tech__panel-pairs button svg { color: var(--brand); }
+
+.tech__panel-pairs button:active {
+  transform: translateY(3px);
+  box-shadow: inset 0 0 0 1px var(--card-border);
+}
+
+.tech__panel-cta {
+  width: 100%;
+  justify-content: center;
+}
+
+/* Dark brand marks need a light tile in dark mode */
+[data-theme="dark"] .tech__panel-icon { background: #F4F4EF; }
+
+/* --- Responsive --- */
 @media (max-width: 1100px) {
-  .tech__grid { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+  .tech__key-label { font-size: 0.5rem; }
+  .tech__keys { gap: 7px; }
 }
 
 @media (max-width: 860px) {
-  .tech__grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-}
-
-@media (max-width: 640px) {
-  .tech__filters {
-    flex-wrap: nowrap;
-    justify-content: flex-start;
+  .tech__kb { padding: 14px 12px 16px; border-radius: 22px; }
+  .tech__kb::before { border-radius: 23px; }
+  .tech__kb-top { grid-template-columns: 1fr auto; padding: 4px 4px 12px; }
+  .tech__kb-brand { display: none; }
+  .tech__oled { min-width: 0; }
+  .tech__knob { width: 32px; height: 32px; }
+  .tech__plate { padding: 10px; }
+  .tech__fn-row {
+    display: flex;
     overflow-x: auto;
-    margin-left: calc(-1 * clamp(1.25rem, 3vw, 2.75rem));
-    margin-right: calc(-1 * clamp(1.25rem, 3vw, 2.75rem));
-    padding: 2px clamp(1.25rem, 3vw, 2.75rem);
     scrollbar-width: none;
   }
-  .tech__filters::-webkit-scrollbar { display: none; }
-  .tech__filter { flex-shrink: 0; }
-  .tech__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
-  .tech__card { padding: 9px; gap: 10px; border-radius: 15px; }
-  .tech__icon-box { width: 40px; height: 40px; border-radius: 11px; }
-  .tech__icon-box svg { width: 19px; height: 19px; }
-  .tech__name { font-size: 0.82rem; }
-  .tech__category { font-size: 0.5rem; }
+  .tech__fn-row::-webkit-scrollbar { display: none; }
+  .tech__fn { flex: 0 0 auto; padding: 9px 12px 11px; }
+  .tech__keys { grid-template-columns: repeat(5, 1fr); gap: 8px; }
+  .tech__key-label { font-size: 0.56rem; }
+  .tech__bottom-row { grid-template-columns: 1fr 3fr 2fr; }
+
+  /* Panel becomes a bottom sheet */
+  .tech__panel {
+    position: fixed;
+    top: auto;
+    left: 10px;
+    right: 10px;
+    bottom: 10px;
+    width: auto;
+    max-height: 78vh;
+    margin: 0;
+    overflow-y: auto;
+    padding: 22px;
+    z-index: calc(var(--z-navbar) + 5);
+  }
+}
+
+/* --- Screen mode: the theme switch typed out as code over the keys --- */
+.tech__term {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  background:
+    radial-gradient(120% 90% at 50% 0%, rgba(var(--lime-rgb), 0.08), transparent 60%),
+    #050505;
+  box-shadow: inset 0 0 0 1px rgba(var(--lime-rgb), 0.25), inset 0 0 60px rgba(0, 0, 0, 0.9);
+  font-family: var(--font-mono);
+  color: #C9C9C1;
+  overflow: hidden;
+}
+
+/* Faint scanlines for a screen feel */
+.tech__term::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(180deg, rgba(255, 255, 255, 0.025) 0 1px, transparent 1px 3px);
+  pointer-events: none;
+}
+
+.tech__term-bar {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 16px;
+  border-bottom: 1px solid rgba(244, 244, 239, 0.06);
+  font-size: 0.7rem;
+  color: #6F6F68;
+}
+
+.tech__term-bar i {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #2A2A27;
+}
+
+.tech__term-bar i:first-child { background: var(--lime); }
+.tech__term-bar span { margin-left: 8px; }
+
+.tech__term-body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 22px 26px;
+  font-size: clamp(0.8rem, 1.6vw, 1.05rem);
+}
+
+.tech__term-body b { color: #8E8E86; font-weight: 600; }
+.tech__term-body b.is-prompt { color: var(--lime); }
+.tech__term-body b.is-ok { color: var(--lime); text-shadow: 0 0 8px rgba(var(--lime-rgb), 0.7); }
+
+.tech__term-progress { color: var(--lime); letter-spacing: 0.06em; }
+
+.tech__term-live {
+  margin-top: 6px;
+  font-size: 1.15em;
+  color: var(--paper);
+}
+
+.tech__term-caret {
+  display: inline-block;
+  width: 0.55em;
+  height: 1em;
+  margin-left: 3px;
+  vertical-align: -2px;
+  background: var(--lime);
+  animation: blinkCur 1s steps(1) infinite;
+}
+
+/* --- USB-C port on the top edge (the theme cable plugs in here) --- */
+.tech__port {
+  position: absolute;
+  top: -6px;
+  left: 50%;
+  width: 46px;
+  height: 13px;
+  margin-left: -23px;
+  border-radius: 7px 7px 4px 4px;
+  background: linear-gradient(180deg, #3A3A36, #121211);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1), 0 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.tech__port i {
+  position: absolute;
+  left: 11px;
+  right: 11px;
+  top: 4px;
+  height: 4px;
+  border-radius: 3px;
+  background: #050505;
+  transition: background 0.3s ease, box-shadow 0.3s ease;
+}
+
+.tech__port.is-linked i {
+  background: var(--lime);
+  box-shadow: 0 0 10px var(--lime), 0 0 22px rgba(var(--lime-rgb), 0.6);
+}
+
+/* Boot light snaking through the keys */
+.tech__key.is-chase {
+  --glow: 1;
+  filter: brightness(1.08);
 }

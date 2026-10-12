@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react'
 import { motion } from 'framer-motion'
-import { Play, Pause, CheckCircle, Sparkles, Code2, Users2 } from 'lucide-react'
+import { Play, Pause, CheckCircle, Sparkles, Users2 } from 'lucide-react'
 import { useInView, fadeInUp, staggerContainer } from '../hooks/useAnimations'
 import './About.css'
 

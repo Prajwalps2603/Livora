@@ -1,116 +1,109 @@
-import React, { useState } from 'react'
-import { motion } from 'framer-motion'
-import {
-  LayoutDashboard,
-  Smartphone,
-  Cpu,
-  ShoppingBag,
-  Share2,
-  FileCheck,
-  GraduationCap,
-  Sparkles,
-  ArrowUpRight,
-} from 'lucide-react'
+import React, { useEffect, useRef, useState } from 'react'
+import { motion, AnimatePresence, useMotionValue, useSpring, useReducedMotion } from 'framer-motion'
+import { Sparkles, ArrowUpRight } from 'lucide-react'
 import { useInView, fadeInUp, staggerContainer } from '../hooks/useAnimations'
-import showroomImg from '../assets/portfolio/showroom.svg'
-import dashboardImg from '../assets/portfolio/dashboard.svg'
-import inventoryImg from '../assets/portfolio/inventory.svg'
-import androidImg from '../assets/portfolio/android.svg'
-import brandImg from '../assets/portfolio/brand.svg'
-import socialImg from '../assets/portfolio/social.svg'
-import resumeImg from '../assets/portfolio/resume.svg'
-import academicImg from '../assets/portfolio/academic.svg'
+import { scenes } from './PortfolioScenes'
 import './Portfolio.css'
 
 const projects = [
   {
     title: 'Automobile Showroom Management',
     desc: 'Customer management, vehicle inventory tracking, sales follow-ups and automated reporting.',
-    icon: LayoutDashboard,
     tag: 'Web App',
     badge: 'Concept Project',
-    color: 'var(--color-accent)',
     stats: 'Multi-branch Support',
-    image: showroomImg,
   },
   {
     title: 'Business Management Dashboard',
     desc: 'Centralized business operations, KPI analytics, team task tracking and revenue charts.',
-    icon: LayoutDashboard,
     tag: 'Internal Tool',
     badge: 'Concept Project',
-    color: 'var(--color-accent)',
     stats: 'Real-time Metrics',
-    image: dashboardImg,
   },
   {
     title: 'Inventory & Order System',
     desc: 'Automated stock alerts, supplier management, billing workflows and barcode integration.',
-    icon: ShoppingBag,
     tag: 'Automation',
     badge: 'Demo Project',
-    color: 'var(--color-accent)',
     stats: 'Low-stock Alerts',
-    image: inventoryImg,
   },
   {
     title: 'Android Business Application',
     desc: 'Dedicated mobile application for field employees, delivery tracking, and direct customer ordering.',
-    icon: Smartphone,
     tag: 'Android',
     badge: 'Concept Project',
-    color: 'var(--color-accent)',
     stats: 'Offline Support',
-    image: androidImg,
   },
   {
     title: 'Brand Identity & Stationery Suite',
     desc: 'Cohesive visual identity, vector logo marks, letterheads, invoice templates and corporate cards.',
-    icon: Cpu,
     tag: 'Branding',
     badge: 'Design System',
-    color: 'var(--color-accent)',
     stats: 'Vector Assets',
-    image: brandImg,
   },
   {
     title: 'Social Media Growth Engine',
     desc: 'Targeted ad creatives, calendar scheduling, content production and lead-gen funnels.',
-    icon: Share2,
     tag: 'Marketing',
     badge: 'Campaign',
-    color: 'var(--color-accent)',
     stats: '+320% Reach',
-    image: socialImg,
   },
   {
     title: 'ATS-Optimized Resumes & Portfolios',
     desc: 'Precision resume templates, keyword ranking optimization, and personal developer portfolio sites.',
-    icon: FileCheck,
     tag: 'Career Tool',
     badge: 'Template Kit',
-    color: 'var(--color-accent)',
     stats: '99% ATS Pass',
-    image: resumeImg,
   },
   {
     title: 'Academic & Research Portal',
     desc: 'Project source code, documentation templates, report generators and milestone trackers.',
-    icon: GraduationCap,
     tag: 'Student Solution',
     badge: 'Academic',
-    color: 'var(--color-accent)',
     stats: 'Complete Docs',
-    image: academicImg,
   },
 ]
 
-// Duplicate projects to create a seamless infinite loop
-const doubleProjects = [...projects, ...projects]
+// How long each project stays on stage before the showcase moves on
+const SLIDE_MS = 5200
+const pad = (n) => String(n).padStart(2, '0')
 
 export default function Portfolio() {
   const [ref, inView] = useInView()
-  const [isHovered, setIsHovered] = useState(false)
+  const reduce = useReducedMotion()
+  const [active, setActive] = useState(0)
+  const [paused, setPaused] = useState(false)
+  const indexRef = useRef(null)
+
+  // Stage tilts toward the pointer
+  const rotX = useSpring(useMotionValue(0), { stiffness: 140, damping: 18 })
+  const rotY = useSpring(useMotionValue(0), { stiffness: 140, damping: 18 })
+
+  const handleTilt = (e) => {
+    if (reduce) return
+    const r = e.currentTarget.getBoundingClientRect()
+    rotY.set(((e.clientX - r.left) / r.width - 0.5) * 10)
+    rotX.set(-((e.clientY - r.top) / r.height - 0.5) * 8)
+  }
+  const resetTilt = () => { rotX.set(0); rotY.set(0) }
+
+  // Advance through the projects on its own; hovering the showcase holds it
+  useEffect(() => {
+    if (!inView || paused || reduce) return
+    const timer = setTimeout(() => setActive((a) => (a + 1) % projects.length), SLIDE_MS)
+    return () => clearTimeout(timer)
+  }, [inView, paused, reduce, active])
+
+  // On small screens the index is a sideways strip: keep the active project in view within it
+  useEffect(() => {
+    const list = indexRef.current
+    if (!list || list.scrollWidth <= list.clientWidth) return
+    const row = list.children[active]
+    if (row) list.scrollTo({ left: row.offsetLeft - list.offsetLeft - 8, behavior: 'smooth' })
+  }, [active])
+
+  const project = projects[active]
+  const Scene = scenes[active]
 
   return (
     <section id="work" className="section portfolio" ref={ref}>
@@ -133,61 +126,97 @@ export default function Portfolio() {
             Explore practical applications, business dashboards, and digital tools we build from scratch.
           </motion.p>
         </motion.div>
-      </div>
 
-      {/* Infinite Seamless Scrolling Slideshow Track */}
-      <div
-        className="portfolio__infinite-viewport"
-        onMouseEnter={() => setIsHovered(true)}
-        onMouseLeave={() => setIsHovered(false)}
-      >
-        <div className={`portfolio__infinite-track ${isHovered ? 'portfolio__infinite-track--paused' : ''}`}>
-          {doubleProjects.map((project, idx) => {
-            const Icon = project.icon
-            return (
-              <div key={`${project.title}-${idx}`} className="portfolio__infinite-item">
-                <motion.div
-                  className="portfolio__card glass-card"
-                  whileHover={{ y: -6, scale: 1.02 }}
-                  transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+        <motion.div
+          className={`portfolio__showcase ${paused || reduce ? 'is-paused' : ''}`}
+          variants={fadeInUp}
+          initial="hidden"
+          animate={inView ? 'visible' : 'hidden'}
+          onMouseEnter={() => setPaused(true)}
+          onMouseLeave={() => { setPaused(false); resetTilt() }}
+        >
+          {/* Project index */}
+          <ol className="portfolio__index" role="tablist" aria-label="Projects" ref={indexRef}>
+            {projects.map((p, i) => (
+              <li key={p.title}>
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={i === active}
+                  className={`portfolio__row ${i === active ? 'is-active' : ''}`}
+                  onClick={() => setActive(i)}
+                  onMouseEnter={() => setActive(i)}
                 >
-                  <div className="portfolio__card-visual" style={{ '--project-color': project.color }}>
-                    <img
-                      src={project.image}
-                      alt={`${project.title} illustration`}
-                      className="portfolio__card-img"
-                      loading="lazy"
-                      draggable="false"
-                    />
-                    <div className="portfolio__card-shade" />
-                    <span className="portfolio__card-badge">
-                      <span className="portfolio__card-badge-dot" style={{ background: project.color }} />
-                      {project.badge}
-                    </span>
-                    <span className="portfolio__card-open" aria-hidden="true">
-                      <ArrowUpRight size={18} />
-                    </span>
-                    <span className="portfolio__card-icon" style={{ color: project.color }}>
-                      <Icon size={18} />
-                    </span>
-                  </div>
+                  <span className="portfolio__row-num">{pad(i + 1)}</span>
+                  <span className="portfolio__row-title">{p.title}</span>
+                  <span className="portfolio__row-tag">{p.tag}</span>
+                  {i === active && (
+                    <span key={`t-${active}`} className="portfolio__row-timer" style={{ '--slide-ms': `${SLIDE_MS}ms` }} />
+                  )}
+                </button>
+              </li>
+            ))}
+          </ol>
 
-                  <div className="portfolio__card-info">
-                    <div className="portfolio__card-meta">
-                      <span className="portfolio__card-tag" style={{ color: project.color, background: 'var(--tint)' }}>
-                        {project.tag}
-                      </span>
-                      <span className="portfolio__card-stat">{project.stats}</span>
-                    </div>
-                    <h3 className="portfolio__card-title">{project.title}</h3>
-                    <p className="portfolio__card-desc">{project.desc}</p>
-                  </div>
-                </motion.div>
+          {/* Stage */}
+          <div className="portfolio__stage" onMouseMove={handleTilt} onMouseLeave={resetTilt}>
+            <motion.div className="portfolio__frame" style={{ rotateX: rotX, rotateY: rotY }}>
+              {/* Window bar keeps labels off the artwork */}
+              <div className="portfolio__bar">
+                <span className="portfolio__bar-dots"><i /><i /><i /></span>
+                <span className="portfolio__badge"><i /> {project.badge}</span>
+                <span className="portfolio__counter">
+                  {pad(active + 1)}<small>/{pad(projects.length)}</small>
+                </span>
               </div>
-            )
-          })}
-        </div>
+              <div className="portfolio__shot-box">
+                {/* The incoming project wipes in on top of the outgoing one */}
+                <AnimatePresence initial={false}>
+                  <motion.figure
+                    key={active}
+                    className="portfolio__shot"
+                    initial={{ clipPath: 'inset(0 0 0 100% round 18px)', zIndex: 2 }}
+                    animate={{ clipPath: 'inset(0 0 0 0% round 18px)', zIndex: 2 }}
+                    exit={{ zIndex: 1, opacity: 0.999, transition: { duration: 0.75 } }}
+                    transition={{ duration: 0.7, ease: [0.76, 0, 0.24, 1] }}
+                  >
+                    <Scene />
+                  </motion.figure>
+                </AnimatePresence>
+              </div>
+
+              <motion.span
+                key={`stat-${active}`}
+                className="portfolio__stat"
+                initial={{ y: 16, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                transition={{ duration: 0.5, delay: 0.45, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <i /> {project.stats}
+              </motion.span>
+            </motion.div>
+
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div
+                key={active}
+                className="portfolio__details"
+                initial={{ y: 14, opacity: 0 }}
+                animate={{ y: 0, opacity: 1 }}
+                exit={{ y: -10, opacity: 0 }}
+                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              >
+                <div className="portfolio__details-text">
+                  <span className="portfolio__details-tag">{project.tag}</span>
+                  <h3 className="portfolio__details-title">{project.title}</h3>
+                  <p className="portfolio__details-desc">{project.desc}</p>
+                </div>
+                <span className="portfolio__details-open" aria-hidden="true"><ArrowUpRight size={20} /></span>
+              </motion.div>
+            </AnimatePresence>
+          </div>
+        </motion.div>
       </div>
+
     </section>
   )
 }

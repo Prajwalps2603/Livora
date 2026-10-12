@@ -23,7 +23,7 @@
   display: flex;
   flex-direction: column;
   gap: 10px;
-  min-height: 372px;
+  min-height: 396px; /* fits the full conversation, so the section never grows mid-loop */
   padding: 16px;
   margin-bottom: 34px;
   border: 1px solid var(--card-border);
@@ -261,7 +261,7 @@
 
 @media (max-width: 640px) {
   .automation__stock { grid-template-columns: minmax(0, 1fr); }
-  .automation__chat { min-height: 420px; }
+  .automation__chat { min-height: 440px; }
   .automation__msg { font-size: 0.84rem; }
 }
 

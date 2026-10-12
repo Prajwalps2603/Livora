@@ -117,14 +117,19 @@ function EvaluationStage() {
           ))}
         </ul>
 
+        {/* Real phone proportions: the frame holds a screen, the screen holds the app */}
         <div className="tbc-eval__phone">
-          <span className="tbc-eval__phone-notch" />
-          <span className="sys-label">APK v0.3</span>
-          <strong>128</strong>
-          <span className="tbc-eval__phone-row" />
-          <span className="tbc-eval__phone-row" />
-          <span className="tbc-eval__phone-row" />
-          <span className="tbc-eval__phone-cta">New order</span>
+          <div className="tbc-eval__phone-screen">
+            <span className="tbc-eval__phone-notch" />
+            <span className="tbc-eval__phone-status"><b>9:41</b><i /></span>
+            <span className="sys-label">APK v0.3</span>
+            <strong>128</strong>
+            <small className="tbc-eval__phone-sub">orders today</small>
+            <span className="tbc-eval__phone-row" />
+            <span className="tbc-eval__phone-row" />
+            <span className="tbc-eval__phone-row" />
+            <span className="tbc-eval__phone-cta">New order</span>
+          </div>
         </div>
       </div>
     </div>

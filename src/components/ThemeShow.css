@@ -1,0 +1,265 @@
+/* --- Theme switch show: a roaming bot that plugs into the keyboard --- */
+.tshow {
+  position: fixed;
+  inset: 0;
+  z-index: calc(var(--z-cursor) + 5);
+  pointer-events: none;
+}
+
+.tshow__svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+/* USB cable: ink sleeve with lime power flowing inside */
+.tshow__wire {
+  fill: none;
+  stroke: #1C1C1A;
+  stroke-width: 6;
+  stroke-linecap: round;
+}
+
+[data-theme="dark"] .tshow__wire { stroke: #3A3A36; }
+
+.tshow__glow {
+  fill: none;
+  stroke: var(--lime);
+  stroke-width: 2.2;
+  stroke-linecap: round;
+  stroke-dasharray: 6 7;
+  filter: drop-shadow(0 0 4px var(--lime));
+  animation: tshowFlow 0.5s linear infinite;
+}
+
+@keyframes tshowFlow {
+  to { stroke-dashoffset: -13; }
+}
+
+.tshow__pulse {
+  fill: #F4FFD0;
+  filter: drop-shadow(0 0 6px var(--lime)) drop-shadow(0 0 14px var(--lime));
+}
+
+/* USB-C plug at the end of the cable */
+.tshow__plug {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 26px;
+  will-change: transform;
+}
+
+.tshow__plug-body {
+  position: relative;
+  width: 24px;
+  height: 26px;
+  border-radius: 7px 7px 5px 5px;
+  background: linear-gradient(180deg, #DDFB72, var(--lime));
+  box-shadow: inset 0 -3px 0 rgba(0, 0, 0, 0.18), 0 8px 16px -6px rgba(0, 0, 0, 0.6);
+}
+
+.tshow__plug-body i {
+  position: absolute;
+  left: 6px;
+  right: 6px;
+  top: 7px;
+  height: 8px;
+  background: repeating-linear-gradient(180deg, rgba(13, 13, 12, 0.35) 0 1.5px, transparent 1.5px 4px);
+}
+
+.tshow__plug-tip {
+  width: 15px;
+  height: 9px;
+  margin-top: -1px;
+  border-radius: 0 0 5px 5px;
+  background: linear-gradient(180deg, #C9C9C1, #8E8E86);
+  box-shadow: inset 0 0 0 1.5px #5A5A54;
+}
+
+/* --- The bot --- */
+.tshow__bot-pos {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 56px;
+  height: 56px;
+  will-change: transform;
+}
+
+.tbot {
+  position: relative;
+  width: 56px;
+  height: 56px;
+  pointer-events: auto;
+  cursor: pointer;
+}
+
+.tbot__body {
+  position: absolute;
+  inset: 6px 3px 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border-radius: 17px 17px 17px 7px;
+  background: linear-gradient(180deg, #DDFB72, var(--lime));
+  box-shadow:
+    inset 0 -3px 0 rgba(0, 0, 0, 0.18),
+    0 10px 22px -8px rgba(13, 13, 12, 0.6),
+    0 0 22px rgba(var(--lime-rgb), 0.45);
+  transition: box-shadow 0.3s ease;
+}
+
+.tbot__eye {
+  width: 8px;
+  height: 11px;
+  border-radius: 4px;
+  background: var(--ink);
+  transition: height 0.2s ease, border-radius 0.2s ease, transform 0.2s ease;
+  animation: tbotBlink 3.2s infinite;
+}
+
+@keyframes tbotBlink {
+  0%, 92%, 100% { transform: scaleY(1); }
+  95% { transform: scaleY(0.1); }
+}
+
+.tbot__antenna {
+  position: absolute;
+  top: -5px;
+  left: 50%;
+  width: 2px;
+  height: 12px;
+  margin-left: -1px;
+  background: var(--ink);
+}
+
+.tbot__antenna::after {
+  content: '';
+  position: absolute;
+  top: -5px;
+  left: -3px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--lime);
+  box-shadow: 0 0 10px var(--lime);
+  animation: tbotPing 0.9s ease-in-out infinite alternate;
+}
+
+@keyframes tbotPing { to { opacity: 0.4; } }
+
+/* Belly hatch the cable comes out of */
+.tbot__hatch {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  width: 14px;
+  height: 4px;
+  margin-left: -7px;
+  border-radius: 0 0 4px 4px;
+  background: var(--ink);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+/* Thruster flame */
+.tbot__flame {
+  position: absolute;
+  left: 50%;
+  bottom: -15px;
+  width: 12px;
+  height: 16px;
+  margin-left: -6px;
+  border-radius: 50% 50% 50% 50% / 30% 30% 70% 70%;
+  background: radial-gradient(circle at 50% 30%, #fff, var(--lime) 45%, rgba(var(--lime-rgb), 0));
+  opacity: 0;
+  transform-origin: top;
+  transition: opacity 0.2s ease;
+}
+
+.tbot--flying .tbot__flame {
+  opacity: 1;
+  animation: tbotFlame 0.1s linear infinite alternate;
+}
+
+@keyframes tbotFlame {
+  from { transform: scaleY(0.85); }
+  to { transform: scaleY(1.3); }
+}
+
+/* Hovering / plugged: hatch open, eyes looking down at the keyboard */
+.tbot--hovering .tbot__hatch,
+.tbot--plugged .tbot__hatch,
+.tbot--charged .tbot__hatch { opacity: 1; }
+
+.tbot--hovering .tbot__eye,
+.tbot--plugged .tbot__eye {
+  transform: translateY(3px);
+  animation: none;
+}
+
+/* Charged: glowing hard, happy ^ ^ eyes */
+.tbot--charged .tbot__body {
+  box-shadow:
+    inset 0 -3px 0 rgba(0, 0, 0, 0.18),
+    0 0 0 4px rgba(var(--lime-rgb), 0.35),
+    0 0 50px var(--lime);
+}
+
+.tbot--charged .tbot__eye {
+  height: 5px;
+  border-radius: 5px 5px 0 0;
+  background: transparent;
+  box-shadow: inset 0 2.5px 0 var(--ink);
+  animation: none;
+}
+
+/* The toggle icon hides while its bot is out */
+.theme-show-on .navbar-theme-btn > div:not(.navbar-theme-btn__glow) {
+  opacity: 0;
+}
+
+/* Skip */
+.tbot-skip {
+  position: fixed;
+  left: 50%;
+  bottom: 24px;
+  z-index: calc(var(--z-cursor) + 6);
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  margin-left: -58px;
+  padding: 10px 16px;
+  border-radius: 99px;
+  background: rgba(13, 13, 12, 0.85);
+  backdrop-filter: blur(8px);
+  color: var(--paper);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 12px 26px -12px rgba(0, 0, 0, 0.7);
+}
+
+.tbot-skip kbd {
+  padding: 2px 6px;
+  border-radius: 5px;
+  background: rgba(244, 244, 239, 0.14);
+  font-family: inherit;
+  font-size: 0.62rem;
+}
+
+/* The theme spreads as a growing circle (View Transitions) */
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}

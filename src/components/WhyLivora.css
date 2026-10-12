@@ -14,136 +14,355 @@
 .why__grid {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
-  gap: var(--space-xl);
+  gap: var(--space-lg);
+  align-items: stretch;
 }
 
-.why__card {
-  padding: var(--space-2xl) var(--space-xl);
-  text-align: left;
+/* --- Card: a live mini-screen on top, the promise below --- */
+.why__card.glass-card {
   display: flex;
   flex-direction: column;
-  position: relative;
-  overflow: hidden;
+  padding: 12px 12px var(--space-xl);
   border-radius: var(--radius-xl);
-  border: 1px solid var(--glass-border);
-  background: rgba(255, 255, 255, 0.75);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.03);
-  transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-              box-shadow 0.4s cubic-bezier(0.22, 1, 0.36, 1),
-              border-color 0.4s ease;
-  z-index: 1;
+  text-align: left;
 }
 
-.why__card:hover {
-  border-color: var(--why-card-glow, rgba(var(--accent-rgb), 0.3));
-  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.08);
-}
-
-/* Background Gradient */
-.why__card-bg-gradient {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 0;
-  opacity: 0.9;
-  transition: opacity var(--transition-base);
-}
-
-.why__card:hover .why__card-bg-gradient {
-  opacity: 1;
-}
-
-/* Watermark Illustration */
-.why__card-watermark {
-  position: absolute;
-  bottom: -20px;
-  right: -20px;
-  opacity: 0.04;
-  pointer-events: none;
-  z-index: 0;
-  transform: rotate(-10deg);
-  transition: transform 0.5s ease, opacity 0.5s ease;
-}
-
-.why__card:hover .why__card-watermark {
-  opacity: 0.08;
-  transform: rotate(0deg) scale(1.1);
-}
-
-/* Top Row */
-.why__card-top {
+.why__card-meta {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  margin-bottom: var(--space-lg);
-  position: relative;
-  z-index: 1;
+  gap: var(--space-sm);
+  margin: var(--space-lg) var(--space-sm) var(--space-md);
 }
 
-.why__card-icon {
-  width: 56px;
-  height: 56px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 18px;
-  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
-  transition: transform var(--transition-base);
+.why__card-num {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--color-text);
 }
 
-.why__card:hover .why__card-icon {
-  transform: scale(1.08);
+.why__card-num small {
+  margin-left: 3px;
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  color: var(--color-text-muted);
 }
 
 .why__card-tag {
-  font-size: 0.7rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.06em;
   padding: 4px 10px;
-  border-radius: var(--radius-full);
+  color: var(--color-text-secondary);
+  white-space: nowrap;
 }
 
 .why__card-title {
-  font-size: 1.25rem;
+  margin: 0 var(--space-sm) var(--space-xs);
+  font-family: var(--font-display);
+  font-size: 1.3rem;
   font-weight: 800;
   letter-spacing: -0.02em;
   color: var(--color-text);
-  margin-bottom: var(--space-xs);
-  position: relative;
-  z-index: 1;
 }
 
 .why__card-desc {
+  margin: 0 var(--space-sm);
   font-size: 0.9rem;
+  line-height: 1.65;
   color: var(--color-text-secondary);
-  line-height: 1.7;
+}
+
+/* The one ink card breaks up the row */
+.why__card.why__card--ink {
+  background: var(--ink);
+  border-color: rgba(244, 244, 239, 0.1);
+}
+
+[data-theme="dark"] .why__card.why__card--ink {
+  background: #171A0E;
+  border-color: rgba(var(--lime-rgb), 0.28);
+}
+
+.why__card--ink .why__card-num,
+.why__card--ink .why__card-title {
+  color: var(--paper);
+}
+
+/* --- Mini-screen shell --- */
+.whyv {
   position: relative;
-  z-index: 1;
+  height: 156px;
+  overflow: hidden;
+  border-radius: 16px;
+  background: var(--surface-alt);
+  box-shadow: inset 0 0 0 1px var(--card-border);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  color: var(--color-text-secondary);
 }
 
-/* Dark Theme Overrides */
-[data-theme="dark"] .why__card {
-  background: rgba(var(--ink-rgb), 0.65);
-  border-color: rgba(255, 255, 255, 0.06);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+.why__card--ink .whyv {
+  background: #1A1A18;
+  box-shadow: inset 0 0 0 1px rgba(244, 244, 239, 0.08);
 }
 
-[data-theme="dark"] .why__card:hover {
-  box-shadow: 0 20px 48px rgba(0, 0, 0, 0.5);
+.whyv__bar {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 10px 12px 6px;
+  color: var(--color-text-muted);
 }
 
-[data-theme="dark"] .why__card-watermark {
-  opacity: 0.03;
-  color: white;
+.whyv__bar i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--card-border);
 }
 
-[data-theme="dark"] .why__card:hover .why__card-watermark {
-  opacity: 0.07;
+.whyv__bar span {
+  margin-left: 6px;
+  letter-spacing: 0.04em;
 }
 
-/* Responsive */
-@media (max-width: 1024px) {
+/* Paused until the section scrolls into view */
+.why__grid:not(.is-live) .whyv *,
+.why__grid:not(.is-live) .whyv *::before {
+  animation-play-state: paused !important;
+}
+
+/* --- 01 Fit: steps tick off in turn --- */
+.whyv-fit__row {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  margin: 6px 12px 0;
+  padding: 7px 10px;
+  border-radius: 10px;
+  background: var(--surface-card);
+  box-shadow: 0 1px 0 var(--card-border), 0 6px 14px -12px rgba(var(--shadow-rgb), 0.5);
+  font-family: var(--font-family);
+  font-size: 0.78rem;
+  font-weight: 500;
+  color: var(--color-text);
+  animation: fitRow 4.8s var(--ease-out-expo) infinite;
+  animation-delay: calc(var(--i) * 0.5s);
+}
+
+.whyv-fit__check {
+  display: grid;
+  place-items: center;
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+  border-radius: 6px;
+  color: transparent;
+  box-shadow: inset 0 0 0 1.5px var(--card-border);
+  animation: fitCheck 4.8s var(--ease-out-expo) infinite;
+  animation-delay: calc(var(--i) * 0.5s);
+}
+
+@keyframes fitRow {
+  0%, 8% { transform: translateX(-6px); opacity: 0.45; }
+  18%, 84% { transform: none; opacity: 1; }
+  100% { transform: translateX(-6px); opacity: 0.45; }
+}
+
+@keyframes fitCheck {
+  0%, 12% { background: transparent; color: transparent; transform: scale(1); }
+  18% { background: var(--lime); color: var(--ink); transform: scale(1.25); box-shadow: none; }
+  24%, 84% { background: var(--lime); color: var(--ink); transform: scale(1); box-shadow: none; }
+  100% { background: transparent; color: transparent; }
+}
+
+/* --- 02 Modular: a new module drops into its slot --- */
+.whyv--mod {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(2, 1fr);
+  gap: 8px;
+  padding: 14px;
+}
+
+.whyv-mod__tile,
+.whyv-mod__slot {
+  display: grid;
+  place-items: center;
+  border-radius: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.whyv-mod__tile {
+  background: var(--surface-card);
+  color: var(--color-text);
+  box-shadow: 0 1px 0 var(--card-border), 0 8px 16px -12px rgba(var(--shadow-rgb), 0.55);
+}
+
+.whyv-mod__slot {
+  grid-area: 2 / 3;
+  border: 1.5px dashed var(--card-border);
+}
+
+.whyv-mod__tile--new {
+  grid-area: 2 / 3;
+  display: flex;
+  justify-content: center;
+  gap: 3px;
+  background: var(--lime);
+  color: var(--ink);
+  animation: modDrop 4.2s var(--ease-out-expo) infinite;
+}
+
+@keyframes modDrop {
+  0%, 10% { transform: translate(18px, -64px) rotate(-14deg); opacity: 0; }
+  32% { transform: translate(0, 4px) rotate(2deg); opacity: 1; }
+  40%, 84% { transform: none; opacity: 1; }
+  96%, 100% { transform: scale(0.85); opacity: 0; }
+}
+
+/* --- 03 Scale: the usage chart keeps climbing --- */
+.whyv--scale {
+  display: flex;
+  flex-direction: column;
+  padding: 12px 14px 0;
+}
+
+.whyv-scale__head {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
+.whyv-scale__head span {
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgba(244, 244, 239, 0.5);
+}
+
+.whyv-scale__head strong {
+  margin-left: auto;
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--paper);
+}
+
+.whyv-scale__head em {
+  padding: 2px 6px;
+  border-radius: 6px;
+  background: rgba(var(--lime-rgb), 0.16);
+  color: var(--lime);
+  font-style: normal;
+  font-weight: 600;
+}
+
+.whyv-scale__bars {
+  flex: 1;
+  display: flex;
+  align-items: flex-end;
+  gap: 6px;
+  padding-top: 10px;
+}
+
+.whyv-scale__bars i {
+  flex: 1;
+  height: var(--h);
+  border-radius: 5px 5px 0 0;
+  background: rgba(244, 244, 239, 0.16);
+  transform-origin: bottom;
+  animation: scaleBar 3.6s var(--ease-out-expo) infinite;
+  animation-delay: calc(var(--i) * 0.09s);
+}
+
+.whyv-scale__bars i.is-peak {
+  background: var(--lime);
+  box-shadow: 0 0 18px rgba(var(--lime-rgb), 0.45);
+}
+
+@keyframes scaleBar {
+  0% { transform: scaleY(0.12); }
+  35%, 82% { transform: scaleY(1); }
+  100% { transform: scaleY(0.12); }
+}
+
+/* --- 04 Connect: tools feed one core --- */
+.whyv-connect__lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.whyv-connect__lines path {
+  fill: none;
+  stroke: var(--color-text-muted);
+  stroke-width: 1.2;
+  stroke-dasharray: 3 4;
+  opacity: 0.6;
+  /* the drawing stretches to fill the card; keep the dashes even */
+  vector-effect: non-scaling-stroke;
+}
+
+.whyv-connect__lines circle {
+  fill: var(--lime);
+  stroke: var(--ink);
+  stroke-width: 1;
+}
+
+.whyv-connect__node {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 10px;
+  transform: translate(-50%, -50%);
+  background: var(--surface-card);
+  color: var(--color-text);
+  box-shadow: 0 1px 0 var(--card-border), 0 8px 16px -10px rgba(var(--shadow-rgb), 0.55);
+}
+
+.whyv-connect__core {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 14px 14px 14px 4px;
+  transform: translate(-50%, -50%);
+  background: var(--lime);
+  color: var(--ink);
+}
+
+.whyv-connect__core::before {
+  content: '';
+  position: absolute;
+  inset: -6px;
+  border-radius: 18px 18px 18px 8px;
+  border: 1.5px solid var(--lime);
+  animation: corePulse 1.8s ease-out infinite;
+}
+
+@keyframes corePulse {
+  from { transform: scale(0.85); opacity: 0.9; }
+  to { transform: scale(1.35); opacity: 0; }
+}
+
+/* --- Motion off when the visitor asks for less --- */
+@media (prefers-reduced-motion: reduce) {
+  .whyv *,
+  .whyv *::before { animation: none !important; }
+  .whyv-connect__lines circle { display: none; }
+}
+
+/* --- Responsive --- */
+@media (max-width: 1100px) {
   .why__grid { grid-template-columns: repeat(2, 1fr); }
 }
 

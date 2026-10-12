@@ -143,8 +143,20 @@ export default function Navbar({ currentView, onNavigate }) {
     localStorage.setItem('livora-theme', theme)
   }, [theme])
 
+  // The theme show (bot -> keyboard -> code) applies the switch; fall back to instant if it isn't mounted
+  useEffect(() => {
+    const onApply = (e) => setTheme(e.detail.theme)
+    window.addEventListener('livora:theme-apply', onApply)
+    return () => window.removeEventListener('livora:theme-apply', onApply)
+  }, [])
+
   const toggleTheme = () => {
-    setTheme(prev => prev === 'light' ? 'dark' : 'light')
+    const next = theme === 'light' ? 'dark' : 'light'
+    if (window.__livoraThemeShow) {
+      window.dispatchEvent(new CustomEvent('livora:theme-request', { detail: { next } }))
+      return
+    }
+    setTheme(next)
   }
 
   // Scroll progress

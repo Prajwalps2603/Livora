@@ -29,16 +29,23 @@ Every section after that follows the same rule: **motion that explains something
 
 | Section | What it does |
 |---|---|
+| **Intro** | The handwritten LIVORA logo writes itself stroke by stroke, then lifts away |
 | **Hero** | A live "system assembling itself" dashboard with customers, branches, approvals and reports |
 | **Orbit & Connected Systems** | How scattered tools collapse into one integrated LIVORA system |
 | **Automation** | A live feed of the system reacting to events: low stock → draft PO → approval → supplier → monthly report |
 | **Services** | Web, Android, internal apps, marketing, social, ATS resumes, brand design, academic projects |
 | **Before / After** | A side-by-side comparison of the old way vs. the custom-built way |
-| **Process** | From the first conversation to production, step by step |
-| **Try Before You Commit** | Free strategy session and interactive prototypes |
-| **Portfolio · Technology · Team** | The work, the stack and the people behind it |
+| **Why LIVORA** | Four cards with live mini-screens: workflow fit, modular grid, scaling chart, connected tools |
+| **Process** | A self-running project timeline: phase rail, "in progress" card, deliverables lighting up |
+| **Try Before You Commit** | Prototype → staging build on desktop and phone → sign-off |
+| **Portfolio** | A project index beside a 3D-tilting stage with an animated scene for each project |
+| **Technology** | A 3D "stack-board" keyboard: press a key (or type) to see what we build with that tech |
+| **Team** | The people behind the studio |
+| **FAQ** | A sticky-note answer board: pull a note to read it, or pin up your own question |
 | **About pages** | Purpose, motivation, mission & vision, philosophy and quality |
-| **Contact** | Form, plus a floating WhatsApp button for instant chat |
+| **Contact** | Path tickets, a 24/7 Studio Pass with a live clock and flip-over founder badges, and the form |
+| **Footer** | The logo signs itself again, under a roaming lime spotlight |
+| **Theme switch** | The toggle becomes a bot that flies to the keyboard, plugs in by USB-C and runs the switch as code |
 
 ## ✦ Design language
 
@@ -53,7 +60,7 @@ Every section after that follows the same rule: **motion that explains something
 
 - **Type:** Bricolage Grotesque for headlines, Inter for body, JetBrains Mono for system labels, Caveat for handwritten notes
 - **Surfaces:** soft shadows and distinct section backgrounds instead of hairline borders
-- **Motion:** Framer Motion reveals, a custom cursor and a skeleton loader on first paint
+- **Motion:** Framer Motion reveals, a custom cursor, a handwritten-logo intro, and motion that switches off for visitors who ask for less
 
 ## ✦ For authorized collaborators
 

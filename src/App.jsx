@@ -22,6 +22,7 @@ import Contact from './components/Contact'
 import Footer from './components/Footer'
 import WhatsAppButton from './components/WhatsAppButton'
 import CustomCursor from './components/CustomCursor'
+import ThemeShow from './components/ThemeShow'
 
 // Inner pages load on demand, keeping the first visit light
 const SubPageLayout = lazy(() => import('./components/SubPageLayout'))
@@ -100,6 +101,7 @@ export default function App() {
   return (
     <>
       <CustomCursor />
+      <ThemeShow />
       
       {/* Handwritten logo intro */}
       <AnimatePresence>

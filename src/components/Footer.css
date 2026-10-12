@@ -325,38 +325,6 @@
   transform: scaleX(1);
 }
 
-/* --- Wordmark --- */
-.footer__wordmark {
-  display: flex;
-  justify-content: center;
-  padding: 0 2vw;
-  font-family: var(--font-display);
-  font-size: clamp(5rem, 23.5vw, 26rem);
-  font-weight: 800;
-  letter-spacing: -0.06em;
-  line-height: 0.78;
-  user-select: none;
-}
-
-.footer__wordmark span {
-  display: inline-block;
-  color: transparent;
-  -webkit-text-stroke: 1.5px rgba(244, 244, 239, 0.22);
-  transition: color 0.35s ease, -webkit-text-stroke-color 0.35s ease, transform 0.6s var(--ease-out-expo);
-  animation: wordmarkWave 7s ease-in-out infinite;
-  animation-delay: calc(var(--i) * 0.35s);
-}
-
-.footer__wordmark span:hover {
-  color: var(--lime);
-  -webkit-text-stroke-color: var(--lime);
-  transform: translateY(-4%);
-}
-
-@keyframes wordmarkWave {
-  0%, 70%, 100% { -webkit-text-stroke-color: rgba(244, 244, 239, 0.22); }
-  10% { -webkit-text-stroke-color: var(--lime); }
-}
 
 /* --- Bottom bar --- */
 .footer__bottom {

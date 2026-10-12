@@ -31,7 +31,7 @@ import {
   Clock,
   ChevronRight,
 } from 'lucide-react'
-import { fadeInUp, fadeInScale, fadeInLeft, fadeInRight, staggerContainer, staggerSlow } from '../hooks/useAnimations'
+import { fadeInUp, fadeInScale, fadeInLeft, fadeInRight, staggerContainer } from '../hooks/useAnimations'
 import './AboutPage.css'
 
 export default function AboutPage({ onNavigateHome, onNavigateContact, onNavigateServices, onNavigatePurpose }) {

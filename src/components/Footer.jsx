@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { ArrowUpRight, ArrowUp } from 'lucide-react'
 import { SiInstagram, SiGithub } from 'react-icons/si'
 import { FaLinkedinIn } from 'react-icons/fa'
+import FooterSignature from './FooterSignature'
 import './Footer.css'
 import logo from '../assets/livora-logo.png'
 
@@ -176,12 +177,8 @@ export default function Footer({ onNavigate }) {
         </div>
       </div>
 
-      {/* Giant wordmark: each letter lights up under the pointer */}
-      <div className="footer__wordmark" aria-hidden="true">
-        {'LIVORA'.split('').map((letter, i) => (
-          <span key={i} style={{ '--i': i }}>{letter}</span>
-        ))}
-      </div>
+      {/* Giant signature: the logo signs itself, a lime light roams across it */}
+      <FooterSignature />
 
       <div className="container footer__bottom">
         <p>&copy; 2026 LIVORA. All rights reserved.</p>
