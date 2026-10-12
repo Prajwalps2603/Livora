@@ -1,5 +1,5 @@
 <p align="center">
-  <img src=".github/banner.svg" alt="LIVORA — From problem to working software." width="100%" />
+  <img src=".github/livora-banner.svg" alt="LIVORA — From problem to working software." width="100%" />
 </p>
 
 <p align="center">
